@@ -11,7 +11,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
     let sqlText = `
     SELECT 
-        "tagName"
+        ARRAY_AGG("tagName")
     FROM "tags"
     WHERE "userID" = $1;
     `;

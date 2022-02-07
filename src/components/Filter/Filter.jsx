@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 function Filter () {
@@ -8,14 +8,21 @@ function Filter () {
     const user = useSelector(store => store.user);
 
     useEffect(() => {
-        dispatch({ type: 'FETCH_TAGS', payload: user.id })
-    }, [])
+        dispatch({ type: 'FETCH_TAGS', payload: user.id });
+    }, []);
 
     console.log('tags are', tags);
+
 
     return (
         <>
         Test
+        {/* {tags && 
+            <>{tags[0].array_agg.filter(tag => tag.includes('R').map(filter => (
+            <li>{filter}</li>
+                )))}
+            </>
+        } */}
         </>
     )
 };
