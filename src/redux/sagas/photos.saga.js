@@ -2,10 +2,9 @@ import axios from 'axios';
 import { put, takeEvery } from 'redux-saga/effects';
 
 // Saga for retrieving photos
-function* fetchPhotos() {
+function* fetchPhotos(action) {
     try {
-        const response = yield axios.get(`/${action.payload}`);
-
+        const response = yield axios.get(`/api/photos/${action.payload}`);
         yield put({
             type: 'SET_PHOTOS',
             payload: response.data
@@ -18,7 +17,7 @@ function* fetchPhotos() {
 
 // make this fetchable by whole app
 function* fetchPhotosSaga () {
-    yield takeEvery('GET_PHOTOS', fetchPhotos);
+    yield takeEvery('FETCH_PHOTOS', fetchPhotos);
 }
 
 export default fetchPhotosSaga;

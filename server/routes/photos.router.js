@@ -8,6 +8,7 @@ const router = express.Router();
 
 // Retrieve photos from database
 router.get('/:id', rejectUnauthenticated, (req, res) => {
+    console.log(req.params.id)
 
     let queryText = `
     SELECT
@@ -31,3 +32,5 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
         });
         
 });
+
+module.exports = router;
