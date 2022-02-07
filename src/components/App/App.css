@@ -29,10 +29,10 @@ Button
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  border-color: #014041;
+  border-color: #8f5600;
   border-width: 1px 1px 3px;
   border-radius: 4px;
-  background-color: #00acb0;
+  background-color: #e4a12c;
   color: #f8f8f8;
   font-size: 1.1rem;
   outline: 0;
@@ -98,12 +98,17 @@ Form Treatment
 .formPanel {
   box-sizing: border-box;
   width: 400px;
-  max-width: 100%;
+  max-width: 170%;
   padding: 25px;
   margin: 0 auto 20px;
   background-color: #efefef;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
+}
+
+.divContainer {
+  display: flex;
+  justify-content: center;
 }
 
 input {
