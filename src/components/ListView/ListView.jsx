@@ -1,5 +1,5 @@
-import React, { useEffect}  from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect }  from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // This is one of our simplest components
 // It doesn't have local state
@@ -8,14 +8,24 @@ import { useDispatch } from 'react-redux';
 
 function ListView() {
   const dispatch = useDispatch();
+  const user = useSelector(store => store.user);
+  const photoList = useSelector(store => store.photos);
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_PHOTOS' })
+    dispatch({ type: 'FETCH_PHOTOS', payload: user.id })
   }, []);
+
+  console.log('photos are', photoList);
 
   return (
     <div className="container">
       <p>Your Photos</p>
+      {photoList.map(photo => (
+        <>
+        <img key={photo.photoID} src={photo.imageURL} />
+        <p>Photo of {photo.array_agg.join(", ")} taken on {photo.photoDate}</p>
+        </>
+      ))}
     </div>
   );
 }
