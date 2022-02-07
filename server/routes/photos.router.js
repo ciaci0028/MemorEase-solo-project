@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Retrieve photos from database
 router.get('/:id', rejectUnauthenticated, (req, res) => {
-    console.log(req.params.id)
+    console.log('in get photos', req.params.id)
 
     let queryText = `
         SELECT
