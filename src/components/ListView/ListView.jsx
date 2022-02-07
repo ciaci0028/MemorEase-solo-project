@@ -21,7 +21,10 @@ function ListView() {
     <div className="container">
       <p>Your Photos</p>
       {photoList.map(photo => (
-        <img key={photo.imageURL} src={photo.imageURL} />
+        <>
+        <img key={photo.photoID} src={photo.imageURL} />
+        <p>Photo of {photo.array_agg.join(", ")} taken on {photo.photoDate}</p>
+        </>
       ))}
     </div>
   );

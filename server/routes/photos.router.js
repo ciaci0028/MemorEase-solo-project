@@ -11,18 +11,19 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     console.log(req.params.id)
 
     let queryText = `
-    SELECT
-        "photos"."id" AS "photoID",
-        "photos"."imageURL",
-        "user"."id" AS "userID",
-        ARRAY_AGG("tags"."tagName")
-    FROM "photos"
-    JOIN "user"
-        ON "user"."id" = "photos"."userID"
-    JOIN "tags"
-        ON "tags"."photoID" = "photos"."id"
-    WHERE "user"."id" = $1
-    GROUP BY "photos"."id", "user"."id";
+        SELECT
+            "photos"."id" AS "photoID",
+            "photos"."imageURL",
+            "user"."id" AS "userID",
+            "photos"."photoDate",
+            ARRAY_AGG("tags"."tagName")
+        FROM "photos"
+        JOIN "user"
+            ON "user"."id" = "photos"."userID"
+        JOIN "tags"
+            ON "tags"."photoID" = "photos"."id"
+        WHERE "user"."id" = $1
+        GROUP BY "photos"."id", "user"."id";
     `;
 
     let queryParams = [
