@@ -4,7 +4,12 @@ import { put, takeEvery } from 'redux-saga/effects';
 // Saga for retrieving photos
 function* fetchPhotos() {
     try {
-        const response = yield axios.get(`/${action.payload}`)
+        const response = yield axios.get(`/${action.payload}`);
+
+        yield put({
+            type: 'SET_PHOTOS',
+            payload: response.data
+        })
     }
     catch (error) {
         console.log('photo fetch failed', error);
