@@ -11,18 +11,20 @@ function Filter () {
         dispatch({ type: 'FETCH_TAGS', payload: user.id });
     }, []);
 
+    // const tagArray = tags[0].array_agg;
     console.log('tags are', tags);
 
 
     return (
         <>
-        Test
-        {/* {tags && 
-            <>{tags[0].array_agg.filter(tag => tag.includes('R').map(filter => (
+        Filter
+        <input></input>
+        {tags[0] && 
+            <>{tags[0].array_agg.map(filter => (
             <li>{filter}</li>
-                )))}
+                ))}
             </>
-        } */}
+        }
         </>
     )
 };
