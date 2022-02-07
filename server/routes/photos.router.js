@@ -12,11 +12,17 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
     let queryText = `
     SELECT
-        "imageURL"
+        "photos"."id" AS "photoID",
+        "photos"."imageURL",
+        "user"."id" AS "userID",
+        ARRAY_AGG("tags"."tagName")
     FROM "photos"
     JOIN "user"
         ON "user"."id" = "photos"."userID"
-    WHERE "user"."id" = $1;
+    JOIN "tags"
+        ON "tags"."photoID" = "photos"."id"
+    WHERE "user"."id" = $1
+    GROUP BY "photos"."id", "user"."id";
     `;
 
     let queryParams = [
