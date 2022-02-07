@@ -25,7 +25,7 @@ function LoginForm() {
   }; // end login
 
   return (
-    <div clasName="divContainer">
+    <div className="divContainer">
     <form className="formPanel" onSubmit={login}>
       <h2>Login</h2>
       {errors.loginMessage && (

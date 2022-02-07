@@ -99,7 +99,7 @@ This code is also heavily commented. We recommend reading through the comments, 
   - Footer/Footer
   - Nav/Nav
   - AboutPage/AboutPage
-  - InfoPage/InfoPage
+  - ListView/ListView
   - UserPage/UserPage
   - LoginPage/LoginPage
   - RegisterPage/RegisterPage
