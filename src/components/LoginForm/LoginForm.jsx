@@ -25,6 +25,7 @@ function LoginForm() {
   }; // end login
 
   return (
+    <div className="divContainer">
     <form className="formPanel" onSubmit={login}>
       <h2>Login</h2>
       {errors.loginMessage && (
@@ -60,6 +61,7 @@ function LoginForm() {
         <input className="btn" type="submit" name="submit" value="Log In" />
       </div>
     </form>
+    </div>
   );
 }
 
