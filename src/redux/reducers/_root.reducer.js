@@ -3,7 +3,6 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import photos from './photos.reducer';
 import tags from './tags.reducer';
-import filter from './filter.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -16,7 +15,6 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   photos, // will import photos according to SQL query
   tags, //import all tags for filtering
-  filter, // import the word to filter by
 });
 
 export default rootReducer;
