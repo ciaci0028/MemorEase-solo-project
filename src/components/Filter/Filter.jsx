@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-
 function Filter () {
     const dispatch = useDispatch();
 
@@ -18,10 +17,13 @@ function Filter () {
     // const tagArray = tags[0].array_agg;
     console.log('tags are', tags);
 
-    const handleFilter = (event) => {
-        setSelectedTag(event);
+    const handleFilter = () => {
         console.log('filter by', selectedTag);
-    }
+
+        dispatch({ type: 'FILTER_PHOTOS', payload: selectedTag })
+
+    };
+
 
     return (
         <>
@@ -29,15 +31,16 @@ function Filter () {
             disablePortal
             id="combo-box-demo"
             options={tags[0] && tags[0].array_agg}
-            value={selectedTag}
             sx={{ width: 300 }}
             renderInput={(params) => 
                 <TextField 
                 {...params} 
                 label="Filter By"
-                onChange={(event) => handleFilter(event.target.value)} />
+                value={selectedTag}
+                onSelect={(event) => setSelectedTag(event.target.value)} />
             }
         />
+        <button onClick={() => handleFilter()}>Select</button>
         </>
     )
 };
