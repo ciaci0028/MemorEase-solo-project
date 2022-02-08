@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+
+import ReactChipInput from './ChipInput';
 
 function UploadPage () {
     const dispatch = useDispatch();
@@ -11,6 +13,7 @@ function UploadPage () {
     const [tags, setTags] = useState([]);
     const [date, setDate] = useState('');
     const [uploadDate, setUploadDate] = useState('');
+    const [chips, setChips] = useState([]);
 
     const newImage = {
         imageURL: imageURL,
@@ -31,8 +34,32 @@ function UploadPage () {
         setUploadDate(moment());
         event.preventDefault();
         console.log('getting info', newImage, tags)
-    }
+    };
 
+    // // Chip code
+    // class Example extends React.Component {
+    //     state = {
+    //       chips: []
+    //     };
+    //     addChip = value => {
+    //       const chips = this.state.chips.slice();
+    //       chips.push(value);
+    //       this.setState({ chips });
+    //     };
+    //     removeChip = index => {
+    //       const chips = this.state.chips.slice();
+    //       chips.splice(index, 1);
+    //       this.setState({ chips });
+    //     };
+    //     render() {
+    //       return (
+    //         <ReactChipInput
+              
+    //         />
+    //       );
+    //     }
+    //   }
+    
     return (
         <>
             <p>Upload New Photo Here</p>
@@ -44,6 +71,12 @@ function UploadPage () {
                 >
                 </input>
                 <br/>
+                {/* <ReactChipInput 
+                    classes="class1 class2"
+                    chips={this.state.chips}
+                    onSubmit={value => this.addChip(value)}
+                    onRemove={index => this.removeChip(index)}
+                /> */}
                 <input
                     placeholder="Tags"
                     value={tags}
