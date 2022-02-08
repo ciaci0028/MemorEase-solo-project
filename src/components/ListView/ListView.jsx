@@ -1,6 +1,8 @@
 import React, { useEffect }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import Filter from '../Filter/Filter';
+
 // This is one of our simplest components
 // It doesn't have local state
 // It doesn't dispatch any redux actions or display any part of redux state
@@ -19,12 +21,13 @@ function ListView() {
 
   return (
     <div className="container">
+      <Filter />
       <p>Your Photos</p>
       {photoList.map(photo => (
-        <>
-        <img key={photo.photoID} src={photo.imageURL} />
+        <div key={photo.photoID}>
+        <img src={photo.imageURL} />
         <p>Photo of {photo.array_agg.join(", ")} taken on {photo.photoDate}</p>
-        </>
+        </div>
       ))}
     </div>
   );

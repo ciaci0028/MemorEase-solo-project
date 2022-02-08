@@ -19,6 +19,7 @@ import ListView from '../ListView/ListView';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import UploadPage from '../UploadPage/UploadPage';
 
 import './App.css';
 
@@ -66,6 +67,13 @@ function App() {
             path="/list"
           >
             <ListView />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/upload"
+          >
+            <UploadPage />
           </ProtectedRoute>
 
           <Route
