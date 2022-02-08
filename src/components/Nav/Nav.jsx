@@ -32,6 +32,10 @@ function Nav() {
               List View
             </Link>
 
+            <Link className='navLink' to="/upload">
+              Upload
+            </Link>
+
             <LogOutButton className="navLink" />
           </>
         )}
