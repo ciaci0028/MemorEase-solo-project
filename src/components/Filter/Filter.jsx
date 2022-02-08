@@ -24,6 +24,7 @@ function Filter () {
             type: 'FILTER_PHOTOS', 
             payload: selectedTag
         })
+
     };
 
 
@@ -43,6 +44,10 @@ function Filter () {
             }
         />
         <button onClick={() => handleFilter()}>Select</button>
+        <br/>
+        { selectedTag &&
+        <button onClick={() => dispatch({type: 'FETCH_PHOTOS'})}>List All</button>
+        }
         </>
     )
 };
