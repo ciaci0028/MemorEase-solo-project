@@ -11,19 +11,21 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     console.log('in get photos', req.params.id)
 
     let queryText = `
-        SELECT
-            "photos"."id" AS "photoID",
-            "photos"."imageURL",
-            "user"."id" AS "userID",
-            "photos"."photoDate",
-            ARRAY_AGG("tags"."tagName")
-        FROM "photos"
-        JOIN "user"
-            ON "user"."id" = "photos"."userID"
-        JOIN "tags"
-            ON "tags"."photoID" = "photos"."id"
-        WHERE "user"."id" = $1
-        GROUP BY "photos"."id", "user"."id";
+    SELECT
+        "photos"."id" AS "photoID",
+        "photos"."imageURL",
+        "user"."id" AS "userID",
+        "photos"."photoDate",
+        ARRAY_AGG("tags"."tagName")
+    FROM "user"
+    JOIN "photos"
+        ON "photos"."userID" = "user"."id"
+    JOIN "photoTagJoiner"
+        ON "photoTagJoiner"."photoID" = "photos"."id"
+    JOIN "tags"
+        ON "tags"."id" = "photoTagJoiner"."tagID"
+    WHERE "user"."id" = $1
+    GROUP BY "photos"."id", "user"."id";
     `;
 
     let queryParams = [
