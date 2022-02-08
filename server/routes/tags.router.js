@@ -7,17 +7,25 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/:id', rejectUnauthenticated, (req, res) => {
-    console.log('in tags router', req.params.id);
+    console.log('in tags router', req.user.id);
 
     let sqlText = `
-    SELECT 
-        ARRAY_AGG("tagName")
-    FROM "tags"
-    WHERE "userID" = $1;
+    SELECT
+        "user"."id" AS "userID",
+        ARRAY_AGG(DISTINCT("tags"."tagName"))
+    FROM "user"
+    JOIN "photos"
+        ON "photos"."userID" = "user"."id"
+    JOIN "photoTagJoiner"
+        ON "photoTagJoiner"."photoID" = "photos"."id"
+    JOIN "tags"
+        ON "tags"."id" = "photoTagJoiner"."tagID"
+    WHERE "user"."id" = $1
+    GROUP BY "user"."id";
     `;
 
     let sqlParams = [
-        req.params.id
+        req.user.id
     ];
 
     pool.query(sqlText, sqlParams)

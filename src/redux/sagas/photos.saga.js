@@ -2,9 +2,9 @@ import axios from 'axios';
 import { put, takeEvery } from 'redux-saga/effects';
 
 // Saga for retrieving photos
-function* fetchPhotos(action) {
+function* fetchPhotos() {
     try {
-        const response = yield axios.get(`/api/photos/${action.payload}`);
+        const response = yield axios.get(`/api/photos/`);
         yield put({
             type: 'SET_PHOTOS',
             payload: response.data
