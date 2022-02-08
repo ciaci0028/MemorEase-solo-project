@@ -1,5 +1,6 @@
 import React from 'react';
 import './Footer.css';
+import LogOutButton from '../LogOutButton/LogOutButton';
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
@@ -7,7 +8,12 @@ import './Footer.css';
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 function Footer() {
-  return <footer>&copy; Prime Digital Academy</footer>;
+  return <footer>
+      <div className="footerContainer">
+        <LogOutButton className="logOut" />
+        <h5 className='footerCopy'>&copy; MemorEase by Sabrina Ciaciura 2022</h5>
+      </div>
+    </footer>;
 }
 
 export default Footer;

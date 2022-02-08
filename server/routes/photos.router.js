@@ -78,4 +78,25 @@ router.get('/:tag', rejectUnauthenticated, (req, res) => {
         
 });
 
+router.delete(`/:id`, rejectUnauthenticated, (req, res) => {
+    console.log('in delete photo', req.params.id);
+
+    let sqlText = `
+        DELETE FROM "photos"
+        WHERE "id" = $1
+    `;
+
+    let sqlParams = [
+        req.params.id
+    ];
+
+    pool.query(sqlText, sqlParams)
+        .then(
+            res.sendStatus(200)
+        )
+        .catch(error => {
+            console.log('error deleting from db', error)
+        })
+});
+
 module.exports = router;

@@ -15,9 +15,21 @@ function* fetchPhotos() {
     }
 };
 
+function* deletePhoto(action) {
+    try {
+        const response = yield axios.delete(`/api/photos/${action.payload}`);
+        yield put({ type: 'FETCH_PHOTOS' })
+    }
+    catch (error) {
+        console.log('delete photo saga error', error);
+    }
+
+}
+
 // make this fetchable by whole app
 function* fetchPhotosSaga () {
     yield takeEvery('FETCH_PHOTOS', fetchPhotos);
+    yield takeEvery('DELETE_PHOTO', deletePhoto)
 }
 
 export default fetchPhotosSaga;
