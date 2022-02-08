@@ -7,8 +7,8 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 // Retrieve photos from database
-router.get('/:id', rejectUnauthenticated, (req, res) => {
-    console.log('in get photos', req.params.id)
+router.get('/', rejectUnauthenticated, (req, res) => {
+    console.log('in get photos', req.user.id)
 
     let queryText = `
     SELECT
@@ -29,7 +29,43 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     `;
 
     let queryParams = [
-        req.params.id
+        req.user.id
+    ];
+
+    pool.query(queryText, queryParams)
+        .then((results) => {
+            res.send(results.rows)
+        })
+        .catch((error) => {
+            console.log('error getting photos', error);
+        });
+        
+});
+
+//for the filter option
+router.get('/:tag', rejectUnauthenticated, (req, res) => {
+    console.log('in filter photos', req.user.id, req.params.tag)
+
+    let queryText = `
+    SELECT
+        "photos"."imageURL",
+        "photos"."photoDate",
+        ARRAY_AGG("tags"."tagName")
+    FROM "user"
+    JOIN "photos"
+        ON "photos"."userID" = "user"."id"
+    JOIN "photoTagJoiner"
+        ON "photoTagJoiner"."photoID" = "photos"."id"
+    JOIN "tags"
+        ON "tags"."id" = "photoTagJoiner"."tagID"
+    WHERE "user"."id" = $1
+        AND "tags"."tagName" = $2
+    GROUP BY "photos"."imageURL", "photos"."photoDate";
+    `;
+
+    let queryParams = [
+        req.user.id,
+        req.params.tag
     ];
 
     pool.query(queryText, queryParams)

@@ -11,7 +11,7 @@ function Filter () {
     const [selectedTag, setSelectedTag] = useState('');
 
     useEffect(() => {
-        dispatch({ type: 'FETCH_TAGS', payload: user.id });
+        dispatch({ type: 'FETCH_TAGS' });
     }, []);
 
     // const tagArray = tags[0].array_agg;
@@ -20,8 +20,10 @@ function Filter () {
     const handleFilter = () => {
         console.log('filter by', selectedTag);
 
-        dispatch({ type: 'FILTER_PHOTOS', payload: selectedTag })
-
+        dispatch({ 
+            type: 'FILTER_PHOTOS', 
+            payload: selectedTag
+        })
     };
 
 

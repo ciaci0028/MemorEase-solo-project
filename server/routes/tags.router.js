@@ -7,7 +7,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/:id', rejectUnauthenticated, (req, res) => {
-    console.log('in tags router', req.params.id);
+    console.log('in tags router', req.user.id);
 
     let sqlText = `
     SELECT
@@ -25,7 +25,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     `;
 
     let sqlParams = [
-        req.params.id
+        req.user.id
     ];
 
     pool.query(sqlText, sqlParams)

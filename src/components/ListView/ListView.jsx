@@ -26,7 +26,7 @@ function ListView() {
       {photoList.map(photo => (
         <div key={photo.photoID}>
         <img src={photo.imageURL} />
-        <p>Photo of {photo.array_agg.join(", ")} taken on {photo.photoDate}</p>
+        <p>Photo of {photo.array_agg.join(", ")} from {photo.photoDate}</p>
         </div>
       ))}
     </div>
