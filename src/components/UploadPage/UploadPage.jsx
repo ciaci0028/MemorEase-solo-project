@@ -3,12 +3,21 @@ function UploadPage () {
         <>
             <p>Upload New Photo Here</p>
             <form>
-                <input>
+                <input
+                    placeholder="Image URL"
+                    >
                 </input>
-                <input>
+                <br/>
+                <input
+                    placeholder="Tags"
+                >
                 </input>
-                <input>
+                <br/>
+                <input
+                    placeholder="Date"
+                >
                 </input>
+                <br/>
                 <button>
                     Upload
                 </button>
