@@ -1,8 +1,14 @@
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 function EditPage () {
+    const history = useHistory();
 
     const photo = useSelector(store => store.activePhoto);
+
+    const handleSubmit = () => {
+        history.push('/list');
+    }
 
     return (
         <>
@@ -24,7 +30,10 @@ function EditPage () {
         <input
             value={photo.photoDate}
         >
-        </input>
+        </input><br/>
+        <button onClick={() => handleSubmit()}>
+            Accept Changes
+        </button>
         </>
     )
 };

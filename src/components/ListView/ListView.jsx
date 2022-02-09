@@ -54,7 +54,7 @@ function ListView() {
   return (
     <div className="container">
       { buttonStatus ? 
-        <button onClick={() => setButtonStatus(false)}>Done Editing</button>
+        <button onClick={() => setButtonStatus(false)}>Cancel Editing</button>
         : <button onClick={() => setButtonStatus(true)}>Edit Mode</button>
       }
       <br/><br/>
