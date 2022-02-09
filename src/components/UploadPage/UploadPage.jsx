@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import DatePicker from "react-datepicker";
@@ -9,21 +9,24 @@ import ReactChipInput from './ChipInput';
 function UploadPage () {
     const dispatch = useDispatch();
 
+
+
     const user = useSelector(store => store.user);
     const [startDate, setStartDate] = useState(new Date());
 
     const [imageURL, setImageURL] = useState('');
     const [tags, setTags] = useState([]);
     const [description, setDescription] = useState('');
-    const [uploadDate, setUploadDate] = useState('');
+    const [uploadDate, setUploadDate] = useState(moment().clone().format('MM-DD-YYYY'));
     const [chips, setChips] = useState([]);
+
 
     const newImage = {
         imageURL: imageURL,
-        userID: user.id,
         description: description,
         photoDate: startDate,
-        uploadDate: uploadDate
+        uploadDate: uploadDate,
+        tags: tags
     };
 
     const handleTags = (event) => {
@@ -36,9 +39,14 @@ function UploadPage () {
     console.log('tags are', tags);
 
     const handleSubmit = (event) => {
-        setUploadDate(moment().clone().format('MM-DD-YYYY'));
         event.preventDefault();
-        console.log('getting info', newImage, tags)
+        console.log('getting info', newImage);
+
+        dispatch({
+            type: 'POST_PHOTO',
+            payload: newImage
+        });
+
     };
 
     // // Chip code

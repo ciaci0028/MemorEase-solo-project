@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import UploadPage from '../UploadPage/UploadPage';
+import EditPage from '../EditPage/EditPage';
 
 import './App.css';
 
@@ -74,6 +75,13 @@ function App() {
             path="/upload"
           >
             <UploadPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/edit"
+          >
+            <EditPage />
           </ProtectedRoute>
 
           <Route

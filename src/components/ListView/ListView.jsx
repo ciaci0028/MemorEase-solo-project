@@ -1,5 +1,6 @@
 import React, { useEffect, useState }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import Filter from '../Filter/Filter';
 
@@ -9,6 +10,7 @@ import Filter from '../Filter/Filter';
 // or even care what the redux state is
 
 function ListView() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
   const photoList = useSelector(store => store.photos);
@@ -33,7 +35,17 @@ function ListView() {
     dispatch({
       type: 'DELETE_PHOTO',
       payload: photoID
+    })
+  };
+
+  const handleEdit = (photoID) => {
+
+    dispatch({
+      type: 'FETCH_ACTIVE_PHOTO',
+      payload: photoID
     });
+
+    history.push('/edit');
 
   }
 
@@ -52,9 +64,10 @@ function ListView() {
         <div key={photo.photoID}>
         <img src={photo.imageURL} />
         <p>Photo of {photo.array_agg.join(", ")} from {photo.photoDate}</p>
+        <p>{photo.description}</p>
         { buttonStatus && 
           <div>
-            <button>Edit</button>
+            <button onClick={() => handleEdit(photo.photoID)}>Edit</button>
             <button onClick={() => handleDelete(photo.photoID)}>Delete</button>
           </div>
         }

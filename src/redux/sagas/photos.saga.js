@@ -33,13 +33,23 @@ function* retrieveMemory () {
     catch (error) {
         console.log('retrieve memory failure', error);
     }
-}
+};
+
+function* postPhoto (action) {
+    try {
+        const response = yield axios.post(`/api/photos`, action.payload);
+    }
+    catch (error) {
+        console.log('post photo error', error)
+    }
+};
 
 // make this fetchable by whole app
 function* fetchPhotosSaga () {
     yield takeEvery('FETCH_PHOTOS', fetchPhotos);
     yield takeEvery('DELETE_PHOTO', deletePhoto);
     yield takeEvery('RETRIEVE_MEMORY', retrieveMemory);
+    yield takeEvery('POST_PHOTO', postPhoto);
 }
 
 export default fetchPhotosSaga;
