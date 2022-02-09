@@ -31,7 +31,7 @@ function UploadPage () {
     console.log('tags are', tags);
 
     const handleSubmit = (event) => {
-        setUploadDate(moment());
+        setUploadDate(moment().format('MM-DD-YYYY'));
         event.preventDefault();
         console.log('getting info', newImage, tags)
     };

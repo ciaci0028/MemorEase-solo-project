@@ -24,7 +24,8 @@ function MemoryFeature () {
             {memory && 
             <img
                 src={memory[0].imageURL}
-            />}
+            />
+            }
         </>
     )
 };
