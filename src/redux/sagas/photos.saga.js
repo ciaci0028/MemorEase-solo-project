@@ -23,13 +23,23 @@ function* deletePhoto(action) {
     catch (error) {
         console.log('delete photo saga error', error);
     }
+};
 
+function* retrieveMemory () {
+    try {
+        const response = yield axios.get(`/api/memory/`);
+        yield put({ type: 'SET_MEMORY', payload: response.data })
+    }
+    catch (error) {
+        console.log('retrieve memory failure', error);
+    }
 }
 
 // make this fetchable by whole app
 function* fetchPhotosSaga () {
     yield takeEvery('FETCH_PHOTOS', fetchPhotos);
-    yield takeEvery('DELETE_PHOTO', deletePhoto)
+    yield takeEvery('DELETE_PHOTO', deletePhoto);
+    yield takeEvery('RETRIEVE_MEMORY', retrieveMemory);
 }
 
 export default fetchPhotosSaga;
