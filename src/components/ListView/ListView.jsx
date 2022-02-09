@@ -52,6 +52,7 @@ function ListView() {
         <div key={photo.photoID}>
         <img src={photo.imageURL} />
         <p>Photo of {photo.array_agg.join(", ")} from {photo.photoDate}</p>
+        <p>{photo.description}</p>
         { buttonStatus && 
           <div>
             <button>Edit</button>
