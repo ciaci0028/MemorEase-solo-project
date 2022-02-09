@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import ReactChipInput from './ChipInput';
 
@@ -8,30 +10,33 @@ function UploadPage () {
     const dispatch = useDispatch();
 
     const user = useSelector(store => store.user);
+    const [startDate, setStartDate] = useState(new Date());
 
     const [imageURL, setImageURL] = useState('');
     const [tags, setTags] = useState([]);
-    const [date, setDate] = useState('');
+    const [description, setDescription] = useState('');
     const [uploadDate, setUploadDate] = useState('');
     const [chips, setChips] = useState([]);
 
     const newImage = {
         imageURL: imageURL,
         userID: user.id,
-        photoDate: date,
+        description: description,
+        photoDate: startDate,
         uploadDate: uploadDate
     };
 
     const handleTags = (event) => {
         console.log('in handleTags', event);
         setTags(event);
-    }
+    };
+
 
     console.log('newImage is:', newImage);
     console.log('tags are', tags);
 
     const handleSubmit = (event) => {
-        setUploadDate(moment().format('MM-DD-YYYY'));
+        setUploadDate(moment().clone().format('MM-DD-YYYY'));
         event.preventDefault();
         console.log('getting info', newImage, tags)
     };
@@ -85,11 +90,14 @@ function UploadPage () {
                 </input>
                 <br/>
                 <input
-                    placeholder="Date"
-                    value={date}
-                    onChange={(event) => setDate(event.target.value)}
+                    placeholder="Description (optional)"
+                    value={description}
+                    onChange={(event) => setDescription(event.target.value)}
                 >
                 </input>
+                <DatePicker 
+                    selected={startDate} onChange={(date) => setStartDate(date)}
+                />
                 <br/>
                 <button>
                     Upload
