@@ -4,6 +4,7 @@ import user from './user.reducer';
 import photos from './photos.reducer';
 import tags from './tags.reducer';
 import memory from './memory.reducer';
+import activePhoto from './activePhoto.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   photos, // will import photos according to SQL query
   tags, //import all tags for filtering
   memory, // random memory or on this day
+  activePhoto, // active selected photo for editing
 });
 
 export default rootReducer;

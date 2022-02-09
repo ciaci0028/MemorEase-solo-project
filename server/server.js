@@ -12,6 +12,8 @@ const userRouter = require('./routes/user.router');
 const photosRouter = require('./routes/photos.router');
 const tagsRouter = require('./routes/tags.router');
 const memoryRouter = require('./routes/memory.router');
+const editRouter = require('./routes/edit.router');
+
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -29,6 +31,8 @@ app.use('/api/user', userRouter);
 app.use('/api/photos', photosRouter);
 app.use('/api/tags', tagsRouter);
 app.use('/api/memory', memoryRouter);
+app.use('/api/edit', editRouter);
+
 
 // Serve static files
 app.use(express.static('build'));
