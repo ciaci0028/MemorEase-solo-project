@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import DatePicker from "react-datepicker";
+
 
 function EditPage () {
     const history = useHistory();
@@ -30,7 +32,13 @@ function EditPage () {
         <input
             value={photo.photoDate}
         >
-        </input><br/>
+        </input>
+        <br/>
+        New Date:
+        <DatePicker 
+            // selected={photo.photoDate}
+        />
+        <br/>
         <button onClick={() => handleSubmit()}>
             Accept Changes
         </button>
