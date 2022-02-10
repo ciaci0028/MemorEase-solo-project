@@ -1,6 +1,10 @@
-// import React from 'react';
-// import ReactChipInput from 'react-chip-input';
+import React from 'react';
+import Chip from '@mui/material/Chip';
 
+function ChipInput () {
+    return (
+        <Chip />
+    )
+}
 
-
-//   export default ReactChipInput;
+  export default ChipInput;

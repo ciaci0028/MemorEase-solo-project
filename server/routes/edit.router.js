@@ -13,7 +13,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
         SELECT 
             "photos"."imageURL",
             "photos"."description",
-            "photos"."photoDate",
+            TO_CHAR("photos"."photoDate", 'MM/DD/YYYY'),
             ARRAY_AGG("tags"."tagName")
         FROM "photos"
         JOIN "photoTagJoiner"

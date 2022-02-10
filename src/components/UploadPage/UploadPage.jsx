@@ -4,21 +4,26 @@ import moment from 'moment';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import ReactChipInput from './ChipInput';
+import Chip from '@mui/material/Chip';
+
+import ChipInput from './ChipInput';
+
 
 function UploadPage () {
     const dispatch = useDispatch();
 
-
+    useEffect( () => {
+        dispatch({ type: 'FETCH_TAGS' })
+    }, []);
 
     const user = useSelector(store => store.user);
-    const [startDate, setStartDate] = useState(new Date());
+    const fetchedTags = useSelector(store => store.tags);
 
+    const [startDate, setStartDate] = useState(new Date());
     const [imageURL, setImageURL] = useState('');
     const [tags, setTags] = useState([]);
     const [description, setDescription] = useState('');
     const [uploadDate, setUploadDate] = useState(moment().clone().format('MM-DD-YYYY'));
-    const [chips, setChips] = useState([]);
 
 
     const newImage = {
@@ -37,6 +42,7 @@ function UploadPage () {
 
     console.log('newImage is:', newImage);
     console.log('tags are', tags);
+    console.log('fetched tags are', fetchedTags);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -49,29 +55,7 @@ function UploadPage () {
 
     };
 
-    // // Chip code
-    // class Example extends React.Component {
-    //     state = {
-    //       chips: []
-    //     };
-    //     addChip = value => {
-    //       const chips = this.state.chips.slice();
-    //       chips.push(value);
-    //       this.setState({ chips });
-    //     };
-    //     removeChip = index => {
-    //       const chips = this.state.chips.slice();
-    //       chips.splice(index, 1);
-    //       this.setState({ chips });
-    //     };
-    //     render() {
-    //       return (
-    //         <ReactChipInput
-              
-    //         />
-    //       );
-    //     }
-    //   }
+
     
     return (
         <>
@@ -84,14 +68,19 @@ function UploadPage () {
                 >
                 </input>
                 <br/>
-                {/* <ReactChipInput 
-                    classes="class1 class2"
-                    chips={this.state.chips}
-                    onSubmit={value => this.addChip(value)}
-                    onRemove={index => this.removeChip(index)}
-                /> */}
+                {fetchedTags[0] &&
+                    fetchedTags[0].array_agg.map(tag => (
+                        <Chip 
+                            key={tag}
+                            label={tag}
+                            onClick={() => console.log('clicked')}
+                            onDelete={() => console.log('deleted')}
+                        />
+                    ))
+                }
+                <ChipInput />
                 <input
-                    placeholder="Tags"
+                    placeholder="New Tags"
                     value={tags}
                     onChange={(event) => handleTags(event.target.value)}
                 >

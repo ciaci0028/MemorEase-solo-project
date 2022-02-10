@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import DatePicker from "react-datepicker";
+import Chip from '@mui/material/Chip';
 
 
 function EditPage () {
@@ -24,19 +25,27 @@ function EditPage () {
         >
         </input><br/>
         Current Tags:
+        {photo.array_agg &&
+        photo.array_agg.map(tag => (
+            <Chip
+                key={tag}
+                label={tag}
+                onDelete={() => console.log('deleted photo')}
+            />
+        ))}
+        <br/>
+        New Tags:
         <input
-            value={photo.array_agg}
-        >
-        </input><br/>
-        Current Date:
-        <input
-            value={photo.photoDate}
+            placeholder='New Tags'
         >
         </input>
+        <button
+            onClick={() => console.log('new Tag submitted')}
+        >Submit New Tag</button>
         <br/>
-        New Date:
+        Date:
         <DatePicker 
-            // selected={photo.photoDate}
+            value={photo.to_char}
         />
         <br/>
         <button onClick={() => handleSubmit()}>
