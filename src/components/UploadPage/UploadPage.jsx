@@ -5,8 +5,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import Chip from '@mui/material/Chip';
-
-import ChipInput from './ChipInput';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 
 function UploadPage () {
@@ -18,12 +18,14 @@ function UploadPage () {
 
     const user = useSelector(store => store.user);
     const fetchedTags = useSelector(store => store.tags);
+    const uploadTags = useSelector(store => store.uploadTags);
 
     const [startDate, setStartDate] = useState(new Date());
     const [imageURL, setImageURL] = useState('');
-    const [tags, setTags] = useState([]);
     const [description, setDescription] = useState('');
     const [uploadDate, setUploadDate] = useState(moment().clone().format('MM-DD-YYYY'));
+
+    const [tag, setTag] = useState('');
 
 
     const newImage = {
@@ -31,17 +33,19 @@ function UploadPage () {
         description: description,
         photoDate: startDate,
         uploadDate: uploadDate,
-        tags: tags
+        tags: uploadTags
     };
 
     const handleTags = (event) => {
         console.log('in handleTags', event);
-        setTags(event);
+
+        dispatch({
+            type: 'SET_UPLOAD_TAGS'
+        })
     };
 
 
     console.log('newImage is:', newImage);
-    console.log('tags are', tags);
     console.log('fetched tags are', fetchedTags);
 
     const handleSubmit = (event) => {
@@ -55,12 +59,22 @@ function UploadPage () {
 
     };
 
+    const handleNewTagClick = () => {
+        dispatch({
+            type: 'SET_UPLOAD_TAGS',
+            payload: tag
+        })
+
+        setTag('');
+    };
+
+    console.log('uploading tags are', uploadTags);
 
     
     return (
         <>
             <p>Upload New Photo Here</p>
-            <form onSubmit={handleSubmit}>
+            <div>
                 <input
                     placeholder="Image URL"
                     value={imageURL}
@@ -68,23 +82,32 @@ function UploadPage () {
                 >
                 </input>
                 <br/>
-                {fetchedTags[0] &&
-                    fetchedTags[0].array_agg.map(tag => (
+                <input
+                    placeholder="New Tags"
+                    value={tag}
+                    onChange={(event) => setTag(event.target.value)}
+                >
+                </input>
+                <button
+                    onClick={()=> handleNewTagClick()}
+                >Submit new tag</button>
+                <Autocomplete 
+                    options={fetchedTags[0] && fetchedTags[0].array_agg}
+                    renderInput={(params) => <TextField {...params} label="Current Tags" 
+                    onSelect={(event) => console.log('selected', event.renderInput)}
+                    />}
+                />  
+                <br/>
+                {uploadTags &&
+                    uploadTags.map(tag => (
                         <Chip 
                             key={tag}
                             label={tag}
                             onClick={() => console.log('clicked')}
-                            onDelete={() => console.log('deleted')}
+                            onDelete={() => console.log(() => dispatch({type: 'DELETE_UPLOAD_TAGS', payload: {tag}}))}
                         />
                     ))
                 }
-                <ChipInput />
-                <input
-                    placeholder="New Tags"
-                    value={tags}
-                    onChange={(event) => handleTags(event.target.value)}
-                >
-                </input>
                 <br/>
                 <input
                     placeholder="Description (optional)"
@@ -96,10 +119,10 @@ function UploadPage () {
                     selected={startDate} onChange={(date) => setStartDate(date)}
                 />
                 <br/>
-                <button>
+                <button onClick={handleSubmit}n>
                     Upload
                 </button>
-            </form>
+            </div>
         </>
     )
 };

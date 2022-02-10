@@ -6,6 +6,8 @@ const pool = require('../modules/pool');
 
 const router = express.Router();
 
+// getting all the pertinent information from the photo
+// that has been clicked on "edit" mode
 router.get('/:id', rejectUnauthenticated, (req, res) => {
     console.log('active photo is', req.params.id);
 

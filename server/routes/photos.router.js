@@ -43,7 +43,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         
 });
 
-//for the filter option
+//for the filter option, retrieving all user's tags
 router.get('/:tag', rejectUnauthenticated, (req, res) => {
     console.log('in filter photos', req.user.id, req.params.tag)
 
@@ -79,6 +79,7 @@ router.get('/:tag', rejectUnauthenticated, (req, res) => {
         
 });
 
+// Upload page - adding a new photo
 router.post('/', rejectUnauthenticated, (req, res) => {
     console.log('in post photos', req.body)
 
@@ -156,6 +157,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 
 })
 
+// Delete a photo in edit mode
 router.delete(`/:id`, rejectUnauthenticated, (req, res) => {
     console.log('in delete photo', req.params.id);
 

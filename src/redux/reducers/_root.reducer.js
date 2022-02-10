@@ -5,6 +5,7 @@ import photos from './photos.reducer';
 import tags from './tags.reducer';
 import memory from './memory.reducer';
 import activePhoto from './activePhoto.reducer';
+import uploadTags from './uploadTags.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   tags, //import all tags for filtering
   memory, // random memory or on this day
   activePhoto, // active selected photo for editing
+  uploadTags, // local state only, to store tags while user is uploading
 });
 
 export default rootReducer;
