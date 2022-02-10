@@ -44,12 +44,23 @@ function* postPhoto (action) {
     }
 };
 
+function* activePhoto (action) {
+    try {
+        const response = yield axios.get(`/api/edit/${action.payload}`);
+        yield put({ type: 'SET_ACTIVE_PHOTO', payload: response.data })        
+    }
+    catch (error) {
+        console.log('active photo error', error)
+    }
+};
+
 // make this fetchable by whole app
 function* fetchPhotosSaga () {
     yield takeEvery('FETCH_PHOTOS', fetchPhotos);
     yield takeEvery('DELETE_PHOTO', deletePhoto);
     yield takeEvery('RETRIEVE_MEMORY', retrieveMemory);
     yield takeEvery('POST_PHOTO', postPhoto);
+    yield takeEvery('FETCH_ACTIVE_PHOTO', activePhoto);
 }
 
 export default fetchPhotosSaga;

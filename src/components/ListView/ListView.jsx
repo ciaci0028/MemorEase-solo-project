@@ -54,7 +54,7 @@ function ListView() {
   return (
     <div className="container">
       { buttonStatus ? 
-        <button onClick={() => setButtonStatus(false)}>Done Editing</button>
+        <button onClick={() => setButtonStatus(false)}>Cancel Editing</button>
         : <button onClick={() => setButtonStatus(true)}>Edit Mode</button>
       }
       <br/><br/>
@@ -63,7 +63,7 @@ function ListView() {
       {photoList.map(photo => (
         <div key={photo.photoID}>
         <img src={photo.imageURL} />
-        <p>Photo of {photo.array_agg.join(", ")} from {photo.photoDate}</p>
+        <p>Photo of {photo.array_agg.join(", ")} from {photo.to_char}</p>
         <p>{photo.description}</p>
         { buttonStatus && 
           <div>

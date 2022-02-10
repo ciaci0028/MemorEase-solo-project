@@ -13,6 +13,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     let queryText = `
     SELECT 
         "photos"."imageURL",
+        "photos"."description",
+        TO_CHAR("photos"."photoDate", 'Month DD, YYYY'),
         "user"."id"
     FROM "photos"
     JOIN "user"

@@ -20,12 +20,13 @@ function MemoryFeature () {
 
     return (
         <>
-            <p>Random Photo or On this day</p>
+            <p>A Special Random Memory for You</p>
             {memory && 
-            <img
+            <><img
                 src={memory[0].imageURL}
             />
-            }
+            <p>{memory[0].description} on {memory[0].to_char}</p>
+            </>}
         </>
     )
 };
