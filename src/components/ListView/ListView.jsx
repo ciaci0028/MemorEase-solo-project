@@ -63,7 +63,7 @@ function ListView() {
       {photoList.map(photo => (
         <div key={photo.photoID}>
         <img src={photo.imageURL} />
-        <p>Photo of {photo.array_agg.join(", ")} from {photo.photoDate}</p>
+        <p>Photo of {photo.array_agg.join(", ")} from {photo.to_char}</p>
         <p>{photo.description}</p>
         { buttonStatus && 
           <div>

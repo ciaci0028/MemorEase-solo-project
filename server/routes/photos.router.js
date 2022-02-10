@@ -15,7 +15,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         "photos"."id" AS "photoID",
         "photos"."imageURL",
         "user"."id" AS "userID",
-        "photos"."photoDate",
+        TO_CHAR("photos"."photoDate", 'Month DD, YYYY'),
         ARRAY_AGG("tags"."tagName"),
         "photos"."description"
     FROM "user"
@@ -50,7 +50,7 @@ router.get('/:tag', rejectUnauthenticated, (req, res) => {
     let queryText = `
     SELECT
         "photos"."imageURL",
-        "photos"."photoDate",
+        TO_CHAR("photos"."photoDate", 'Month DD, YYYY'),
         ARRAY_AGG("tags"."tagName")
     FROM "user"
     JOIN "photos"
