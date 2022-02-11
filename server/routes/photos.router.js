@@ -19,11 +19,11 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         ARRAY_AGG("tags"."tagName"),
         "photos"."description"
     FROM "user"
-    JOIN "photos"
+    LEFT JOIN "photos"
         ON "photos"."userID" = "user"."id"
-    JOIN "photoTagJoiner"
+    LEFT JOIN "photoTagJoiner"
         ON "photoTagJoiner"."photoID" = "photos"."id"
-    JOIN "tags"
+    LEFT JOIN "tags"
         ON "tags"."id" = "photoTagJoiner"."tagID"
     WHERE "user"."id" = $1
     GROUP BY "photos"."id", "user"."id";
@@ -105,24 +105,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
             console.log('error posting photo', err);
         });
 
-    let sqlText = `
-        INSERT INTO "tags"
-            ("tagName")
-        VALUES
-            ($1)
-    `;
-
-    let sqlParams = [
-        req.body.tags
-    ];
-
-    pool.query(sqlText, sqlParams)
-        .then(() => {
-            console.log('post tags success')
-        })
-        .catch((err) => {
-            console.log('error posting photo', err);
-        });
+   
 
     let joinerText = `
     INSERT INTO "photoTagJoiner"

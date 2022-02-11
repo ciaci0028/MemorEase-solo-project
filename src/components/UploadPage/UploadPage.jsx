@@ -13,7 +13,7 @@ function UploadPage () {
 
     useEffect( () => {
         dispatch({ type: 'FETCH_TAGS' })
-    }, []);
+    }, [uploadTags]);
 
     const user = useSelector(store => store.user);
     const uploadTags = useSelector(store => store.uploadTags);
@@ -55,16 +55,25 @@ function UploadPage () {
             payload: newImage
         });
 
+        for (let tag of uploadTags){
+            
+            dispatch({
+                type: 'POST_TAG',
+                payload: tag
+            })
+        }
+
+
     };
 
-    const handleNewTagClick = () => {
-        dispatch({
-            type: 'SET_UPLOAD_TAGS',
-            payload: tag
-        })
+    // const handleNewTagClick = () => {
+    //     dispatch({
+    //         type: 'SET_UPLOAD_TAGS',
+    //         payload: tag
+    //     })
 
-        setTag('');
-    };
+    //     setTag('');
+    // };
 
     console.log('uploading tags are', uploadTags);
 
@@ -103,7 +112,7 @@ function UploadPage () {
                     selected={startDate} onChange={(date) => setStartDate(date)}
                 />
                 <br/>
-                <button onClick={handleSubmit}n>
+                <button onClick={handleSubmit}>
                     Upload
                 </button>
             </div>

@@ -1,7 +1,7 @@
 const tagsReducer = (state = [], action) => {
     switch(action.type) {
         case 'SET_TAGS':
-            return action.payload
+            return action.payload;
         default:
             return state;
 

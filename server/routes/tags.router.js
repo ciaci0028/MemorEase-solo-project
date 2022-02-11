@@ -35,6 +35,28 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
         .catch((error) => {
             console.log('tag fetch error', error);
         })
+});
+
+router.post('/', rejectUnauthenticated, (req, res) => {
+    console.log('receiving to post', req.params)
+//     let sqlText = `
+//     INSERT INTO "tags"
+//         ("tagName")
+//     VALUES
+//         ($1)
+// `;
+
+// let sqlParams = [
+//     req.body
+// ];
+
+// pool.query(sqlText, sqlParams)
+//     .then(() => {
+//         console.log('post tags success')
+//     })
+//     .catch((err) => {
+//         console.log('error posting photo', err);
+//     });
 })
 
 module.exports = router;
