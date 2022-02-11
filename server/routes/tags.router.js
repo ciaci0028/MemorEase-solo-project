@@ -14,11 +14,11 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
             "user"."id",
             ARRAY_AGG(DISTINCT("tags"."tagName"))
         FROM "user"
-        JOIN "photos"
+        LEFT JOIN "photos"
             ON "photos"."userID" = "user"."id"
-        JOIN "photoTagJoiner"
+        LEFT JOIN "photoTagJoiner"
             ON "photoTagJoiner"."photoID" = "photos"."id"
-        JOIN "tags"
+        LEFT JOIN "tags"
             ON "tags"."id" = "photoTagJoiner"."tagID"
         WHERE "user"."id" = $1
         GROUP BY "user"."id";
@@ -38,25 +38,25 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 });
 
 router.post('/', rejectUnauthenticated, (req, res) => {
-    console.log('receiving to post', req.params)
-//     let sqlText = `
-//     INSERT INTO "tags"
-//         ("tagName")
-//     VALUES
-//         ($1)
-// `;
+    console.log('receiving to post', req.body.tag)
+    let sqlText = `
+    INSERT INTO "tags"
+        ("tagName")
+    VALUES
+        ($1)
+    `;
 
-// let sqlParams = [
-//     req.body
-// ];
+let sqlParams = [
+    req.body.tag
+];
 
-// pool.query(sqlText, sqlParams)
-//     .then(() => {
-//         console.log('post tags success')
-//     })
-//     .catch((err) => {
-//         console.log('error posting photo', err);
-//     });
+pool.query(sqlText, sqlParams)
+    .then(() => {
+        console.log('post tags success')
+    })
+    .catch((err) => {
+        console.log('error posting photo', err);
+    });
 })
 
 module.exports = router;
