@@ -11,8 +11,8 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
     let sqlText = `
     SELECT
-        "user"."id" AS "userID",
-        ARRAY_AGG(DISTINCT("tags"."tagName"))
+        "tags"."id" AS "tagID",
+        "tags"."tagName"
     FROM "user"
     JOIN "photos"
         ON "photos"."userID" = "user"."id"
@@ -21,7 +21,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     JOIN "tags"
         ON "tags"."id" = "photoTagJoiner"."tagID"
     WHERE "user"."id" = $1
-    GROUP BY "user"."id";
+    GROUP BY "user"."id", "tags"."id", "tags"."tagName";
     `;
 
     let sqlParams = [

@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import DatePicker from "react-datepicker";
+import Autocomplete from './Autocomplete';
 import "react-datepicker/dist/react-datepicker.css";
 
 import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 
 
 function UploadPage () {
@@ -17,16 +16,16 @@ function UploadPage () {
     }, []);
 
     const user = useSelector(store => store.user);
-    const fetchedTags = useSelector(store => store.tags);
     const uploadTags = useSelector(store => store.uploadTags);
 
     const [startDate, setStartDate] = useState(new Date());
     const [imageURL, setImageURL] = useState('');
     const [description, setDescription] = useState('');
     const [uploadDate, setUploadDate] = useState(moment().clone().format('MM-DD-YYYY'));
-
     const [tag, setTag] = useState('');
+    const [value, setValue] = useState(null);
 
+    console.log('the current value is', value);
 
     const newImage = {
         imageURL: imageURL,
@@ -46,7 +45,6 @@ function UploadPage () {
 
 
     console.log('newImage is:', newImage);
-    console.log('fetched tags are', fetchedTags);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -91,12 +89,7 @@ function UploadPage () {
                 <button
                     onClick={()=> handleNewTagClick()}
                 >Submit new tag</button>
-                <Autocomplete 
-                    options={fetchedTags[0] && fetchedTags[0].array_agg}
-                    renderInput={(params) => <TextField {...params} label="Current Tags" 
-                    onSelect={(event) => console.log('selected', event.renderInput)}
-                    />}
-                />  
+                <Autocomplete />
                 <br/>
                 {uploadTags &&
                     uploadTags.map(tag => (
