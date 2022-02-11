@@ -4,8 +4,8 @@ const uploadTagsReducer = (state = [], action) => {
             return [...state, action.payload];
         case 'DELETE_UPLOAD_TAGS':
             let tempArray = [];
-            for(tag of state){
-                if (tag !== action.payload){
+            for(let tag of state){
+                if (tag === action.payload){
                     tempArray.push(action.payload);
                 }
             }

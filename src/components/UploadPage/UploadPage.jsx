@@ -97,7 +97,7 @@ function UploadPage () {
                             key={tag}
                             label={tag}
                             onClick={() => console.log('clicked')}
-                            onDelete={() => console.log(() => dispatch({type: 'DELETE_UPLOAD_TAGS', payload: {tag}}))}
+                            onDelete={() => dispatch({ type: 'DELETE_UPLOAD_TAGS', payload: tag})}
                         />
                     ))
                 }
