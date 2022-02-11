@@ -80,15 +80,6 @@ function UploadPage () {
                 >
                 </input>
                 <br/>
-                <input
-                    placeholder="New Tags"
-                    value={tag}
-                    onChange={(event) => setTag(event.target.value)}
-                >
-                </input>
-                <button
-                    onClick={()=> handleNewTagClick()}
-                >Submit new tag</button>
                 <Autocomplete />
                 <br/>
                 {uploadTags &&
