@@ -25,7 +25,7 @@ function MemoryFeature () {
             <><img
                 src={memory[0].imageURL}
             />
-            <p>{memory[0].description} on {memory[0].to_char}</p>
+            <p>{memory[0].description} from {memory[0].to_char}</p>
             </>}
         </>
     )

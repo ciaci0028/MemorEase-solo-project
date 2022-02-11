@@ -6,6 +6,8 @@ const pool = require('../modules/pool');
 
 const router = express.Router();
 
+// getting all the pertinent information from the photo
+// that has been clicked on "edit" mode
 router.get('/:id', rejectUnauthenticated, (req, res) => {
     console.log('active photo is', req.params.id);
 
@@ -13,7 +15,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
         SELECT 
             "photos"."imageURL",
             "photos"."description",
-            "photos"."photoDate",
+            TO_CHAR("photos"."photoDate", 'MM/DD/YYYY'),
             ARRAY_AGG("tags"."tagName")
         FROM "photos"
         JOIN "photoTagJoiner"

@@ -1,12 +1,15 @@
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import DatePicker from "react-datepicker";
-
+import Chip from '@mui/material/Chip';
+import Autocomplete from '../UploadPage/Autocomplete';
 
 function EditPage () {
     const history = useHistory();
 
+    const uploadTags = useSelector(store => store.uploadTags);
     const photo = useSelector(store => store.activePhoto);
+    console.log('in edit, upload tags are', uploadTags);
 
     const handleSubmit = () => {
         history.push('/list');
@@ -24,19 +27,24 @@ function EditPage () {
         >
         </input><br/>
         Current Tags:
-        <input
-            value={photo.array_agg}
-        >
-        </input><br/>
-        Current Date:
-        <input
-            value={photo.photoDate}
-        >
-        </input>
+        {photo.array_agg &&
+        photo.array_agg.map(tag => (
+            <Chip
+                key={tag}
+                label={tag}
+                onDelete={() => console.log('deleted photo')}
+            />
+        ))}
         <br/>
-        New Date:
+        New Tags:
+        <Autocomplete />
+        <button
+            onClick={() => console.log('new Tag submitted')}
+        >Submit New Tag</button>
+        <br/>
+        Date:
         <DatePicker 
-            // selected={photo.photoDate}
+            value={photo.to_char}
         />
         <br/>
         <button onClick={() => handleSubmit()}>

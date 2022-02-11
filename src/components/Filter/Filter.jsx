@@ -17,15 +17,6 @@ function Filter () {
     // const tagArray = tags[0].array_agg;
     console.log('tags are', tags);
 
-    const handleFilter = () => {
-        console.log('filter by', selectedTag);
-
-        dispatch({ 
-            type: 'FILTER_PHOTOS', 
-            payload: selectedTag
-        })
-
-    };
 
 
     return (
@@ -36,14 +27,11 @@ function Filter () {
             options={tags[0] && tags[0].array_agg}
             sx={{ width: 300 }}
             renderInput={(params) => 
-                <TextField 
-                {...params} 
+            <TextField {...params} 
                 label="Filter By"
-                value={selectedTag}
-                onSelect={(event) => setSelectedTag(event.target.value)} />
-            }
+                onSelect={(event) => dispatch({ type: 'FILTER_PHOTOS', payload: event.target.value})}    
+            />}
         />
-        <button onClick={() => handleFilter()}>Select</button>
         <br/>
         { selectedTag &&
         <button onClick={() => dispatch({type: 'FETCH_PHOTOS'})}>List All</button>

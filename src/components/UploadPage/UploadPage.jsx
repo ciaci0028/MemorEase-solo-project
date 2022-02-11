@@ -2,41 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import DatePicker from "react-datepicker";
+import Autocomplete from './Autocomplete';
 import "react-datepicker/dist/react-datepicker.css";
 
-import ReactChipInput from './ChipInput';
+import Chip from '@mui/material/Chip';
+
 
 function UploadPage () {
     const dispatch = useDispatch();
 
-
+    useEffect( () => {
+        dispatch({ type: 'FETCH_TAGS' })
+    }, []);
 
     const user = useSelector(store => store.user);
-    const [startDate, setStartDate] = useState(new Date());
+    const uploadTags = useSelector(store => store.uploadTags);
 
+    const [startDate, setStartDate] = useState(new Date());
     const [imageURL, setImageURL] = useState('');
-    const [tags, setTags] = useState([]);
     const [description, setDescription] = useState('');
     const [uploadDate, setUploadDate] = useState(moment().clone().format('MM-DD-YYYY'));
-    const [chips, setChips] = useState([]);
+    const [tag, setTag] = useState('');
+    const [value, setValue] = useState(null);
 
+    console.log('the current value is', value);
 
     const newImage = {
         imageURL: imageURL,
         description: description,
         photoDate: startDate,
         uploadDate: uploadDate,
-        tags: tags
+        tags: uploadTags
     };
 
     const handleTags = (event) => {
         console.log('in handleTags', event);
-        setTags(event);
+
+        dispatch({
+            type: 'SET_UPLOAD_TAGS'
+        })
     };
 
 
     console.log('newImage is:', newImage);
-    console.log('tags are', tags);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -49,34 +57,22 @@ function UploadPage () {
 
     };
 
-    // // Chip code
-    // class Example extends React.Component {
-    //     state = {
-    //       chips: []
-    //     };
-    //     addChip = value => {
-    //       const chips = this.state.chips.slice();
-    //       chips.push(value);
-    //       this.setState({ chips });
-    //     };
-    //     removeChip = index => {
-    //       const chips = this.state.chips.slice();
-    //       chips.splice(index, 1);
-    //       this.setState({ chips });
-    //     };
-    //     render() {
-    //       return (
-    //         <ReactChipInput
-              
-    //         />
-    //       );
-    //     }
-    //   }
+    const handleNewTagClick = () => {
+        dispatch({
+            type: 'SET_UPLOAD_TAGS',
+            payload: tag
+        })
+
+        setTag('');
+    };
+
+    console.log('uploading tags are', uploadTags);
+
     
     return (
         <>
             <p>Upload New Photo Here</p>
-            <form onSubmit={handleSubmit}>
+            <div>
                 <input
                     placeholder="Image URL"
                     value={imageURL}
@@ -84,18 +80,18 @@ function UploadPage () {
                 >
                 </input>
                 <br/>
-                {/* <ReactChipInput 
-                    classes="class1 class2"
-                    chips={this.state.chips}
-                    onSubmit={value => this.addChip(value)}
-                    onRemove={index => this.removeChip(index)}
-                /> */}
-                <input
-                    placeholder="Tags"
-                    value={tags}
-                    onChange={(event) => handleTags(event.target.value)}
-                >
-                </input>
+                <Autocomplete />
+                <br/>
+                {uploadTags &&
+                    uploadTags.map(tag => (
+                        <Chip 
+                            key={tag}
+                            label={tag}
+                            onClick={() => console.log('clicked')}
+                            onDelete={() => dispatch({ type: 'DELETE_UPLOAD_TAGS', payload: tag})}
+                        />
+                    ))
+                }
                 <br/>
                 <input
                     placeholder="Description (optional)"
@@ -107,10 +103,10 @@ function UploadPage () {
                     selected={startDate} onChange={(date) => setStartDate(date)}
                 />
                 <br/>
-                <button>
+                <button onClick={handleSubmit}n>
                     Upload
                 </button>
-            </form>
+            </div>
         </>
     )
 };
