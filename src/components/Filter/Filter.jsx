@@ -36,12 +36,10 @@ function Filter () {
             options={tags[0] && tags[0].array_agg}
             sx={{ width: 300 }}
             renderInput={(params) => 
-                <TextField 
-                {...params} 
+            <TextField {...params} 
                 label="Filter By"
-                value={selectedTag}
-                onSelect={(event) => setSelectedTag(event.target.value)} />
-            }
+                onSelect={(event) => setSelectedTag(event.target.value)}    
+            />}
         />
         <button onClick={() => handleFilter()}>Select</button>
         <br/>

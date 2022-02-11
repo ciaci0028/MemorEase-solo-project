@@ -5,14 +5,16 @@ footer {
 }
 
 .footerContainer {
-  
+  position: fixed;
+  bottom: 0;
 }
 
 .footerCopy {
-  height: 10px;
+  height: 15px;
   padding: 0;
   margin-bottom: 10px;
   margin-top: 2px;
+  background-color: #ffffff;
 }
 
 .logOut {
@@ -23,7 +25,7 @@ footer {
   padding: 24px 10px;
   text-decoration: none;
   font-size: 15px;
-  width: 100%;
+  width: 448px;
   height: 30px;
   padding-top: 5px;
 
