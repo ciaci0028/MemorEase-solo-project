@@ -25,7 +25,6 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
         WHERE "photos"."id" = $1
         GROUP BY
             "photos"."imageURL", "photos"."description", "photos"."photoDate";
-    
     `;
 
     let queryParams = [

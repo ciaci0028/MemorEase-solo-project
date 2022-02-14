@@ -14,10 +14,6 @@ function Filter () {
         dispatch({ type: 'FETCH_TAGS' });
     }, []);
 
-    // const tagArray = tags[0].array_agg;
-    console.log('tags are', tags);
-
-
 
     return (
         <>

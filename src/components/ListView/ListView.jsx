@@ -1,13 +1,7 @@
 import React, { useEffect, useState }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
 import Filter from '../Filter/Filter';
-
-// This is one of our simplest components
-// It doesn't have local state
-// It doesn't dispatch any redux actions or display any part of redux state
-// or even care what the redux state is
 
 function ListView() {
   const history = useHistory();
@@ -22,21 +16,18 @@ function ListView() {
     dispatch({ type: 'FETCH_PHOTOS', payload: user.id })
   }, []);
 
-  console.log('photos are', photoList);
-
-
-  // function for starting delete sequence
+  // function for starting delete sequence once in edit mode
   const handleDelete = (photoID) => {
-    console.log('in handleDelete, photoID is', photoID);
-
     dispatch({
       type: 'DELETE_PHOTO',
       payload: photoID
     })
   };
 
+  // Function for entering into edit mode
   const handleEdit = (photoID) => {
-
+    console.log('in handleEdit', photoID);
+  
     dispatch({
       type: 'FETCH_ACTIVE_PHOTO',
       payload: photoID
@@ -45,12 +36,10 @@ function ListView() {
     history.push('/edit');
   };
 
-  console.log('button status', buttonStatus);
-
   return (
     <div className="container">
       { buttonStatus ? 
-        <button onClick={() => setButtonStatus(false)}>Cancel Editing</button>
+        <button onClick={() => setButtonStatus(false)}>Done Editing</button>
         : <button onClick={() => setButtonStatus(true)}>Edit Mode</button>
       }
       <br/><br/>
