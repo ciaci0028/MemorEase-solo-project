@@ -15,7 +15,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         "photos"."id" AS "photoID",
         "photos"."imageURL",
         "user"."id" AS "userID",
-        TO_CHAR("photos"."photoDate", 'Month DD, YYYY'),
+        TO_CHAR("photos"."photoDate", 'MM DD, YYYY'),
         ARRAY_AGG("tags"."tagName"),
         "photos"."description"
     FROM "user"
@@ -26,7 +26,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     LEFT JOIN "tags"
         ON "tags"."id" = "photoTagJoiner"."tagID"
     WHERE "user"."id" = $1
-    GROUP BY "photos"."id", "user"."id";
+    GROUP BY "photos"."id", "user"."id"
+    ORDER BY TO_CHAR DESC;
     `;
 
     let queryParams = [
@@ -79,7 +80,7 @@ router.get('/:tag', rejectUnauthenticated, (req, res) => {
         
 });
 
-// Upload page - adding a new photo
+// Upload page - adding a new photo (photo only to "photos" table)
 router.post('/', rejectUnauthenticated, (req, res) => {
     console.log('in post photos', req.body)
 
@@ -100,39 +101,6 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     pool.query(queryText, queryParams)
         .then(() => {
             console.log('post photo success')
-        })
-        .catch((err) => {
-            console.log('error posting photo', err);
-        });
-
-   
-
-    let joinerText = `
-    INSERT INTO "photoTagJoiner"
-        ("photoID", "tagID")
-    SELECT 
-        "photos"."id" AS "photoID",
-        "tags"."id" AS "tagID"
-    FROM (
-    SELECT "photos"."id"
-    FROM "photos"
-    WHERE "photos"."imageURL" = $1
-    ) AS "photos"
-    CROSS JOIN
-    (SELECT
-        "tags"."id"
-    FROM "tags"
-    WHERE "tags"."tagName" = $2) AS "tags";
-    `;
-
-    let joinerParams = [
-        req.body.imageURL,
-        req.body.tags
-    ];
-
-    pool.query(joinerText, joinerParams)
-        .then(() => {
-            console.log('joiner success')
         })
         .catch((err) => {
             console.log('error posting photo', err);

@@ -18,7 +18,7 @@ function* fetchTags(action) {
 
 function* postTag(action) {
     try {
-        const response = yield axios.post(`/api/tags`, {tag: action.payload});
+        yield axios.post(`/api/tags`, action.payload);
     }
     catch (error) {
         console.log('post tag failure', error)

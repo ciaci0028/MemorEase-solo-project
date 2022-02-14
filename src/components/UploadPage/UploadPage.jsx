@@ -56,12 +56,23 @@ function UploadPage () {
         });
 
         for (let tag of uploadTags){
-            
             dispatch({
                 type: 'POST_TAG',
-                payload: tag
+                payload: {
+                    tag: tag,
+                    imageURL: newImage.imageURL
+                }
             })
-        }
+        };
+
+        dispatch({
+            type: 'DELETE_SELECTED_TAGS'
+        })
+
+        setImageURL('');
+        setDescription('');
+        setStartDate(new Date());
+
 
 
     };
