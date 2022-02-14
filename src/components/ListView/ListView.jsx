@@ -24,9 +24,6 @@ function ListView() {
 
   console.log('photos are', photoList);
 
-  const handleEditMode = () => {
-    ;
-  };
 
   // function for starting delete sequence
   const handleDelete = (photoID) => {
@@ -46,8 +43,7 @@ function ListView() {
     });
 
     history.push('/edit');
-
-  }
+  };
 
   console.log('button status', buttonStatus);
 

@@ -50,6 +50,10 @@ function EditPage () {
         <button onClick={() => handleSubmit()}>
             Accept Changes
         </button>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         </>
     )
 };
