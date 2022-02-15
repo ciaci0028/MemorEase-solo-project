@@ -2,6 +2,7 @@ import React, { useEffect, useState }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Filter from '../Filter/Filter';
+import DatePicker from "react-datepicker";
 
 function ListView() {
   const history = useHistory();
@@ -11,6 +12,9 @@ function ListView() {
 
   //Button for toggling into edit mode
   const [buttonStatus, setButtonStatus] = useState(false);
+
+  // Local state for date picker
+  const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => {
     dispatch({ type: 'FETCH_PHOTOS', payload: user.id })
@@ -36,6 +40,17 @@ function ListView() {
     history.push('/edit');
   };
 
+  const handleSelectedDate = (date) => {
+    setStartDate(date);
+    console.log('the date is', date.toLocaleDateString("en-US"));
+
+    dispatch({
+      type: 'FILTER_BY_DATE',
+      payload: date.toLocaleDateString("en-US")
+    });
+
+  }
+
   return (
     <div className="container">
       { buttonStatus ? 
@@ -44,6 +59,11 @@ function ListView() {
       }
       <br/><br/>
       <Filter />
+      <p>Filter by date:</p>
+      <DatePicker 
+        selected={startDate} 
+        onChange={(date) => handleSelectedDate(date)}
+      />  
       <p>Your Photos</p>
       {photoList.map(photo => (
         <div key={photo.photoID}>

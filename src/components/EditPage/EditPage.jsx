@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import DatePicker from "react-datepicker";
 import Chip from '@mui/material/Chip';
 import Autocomplete from '../UploadPage/Autocomplete';
+import DatePicker from 'react-datepicker';
 
 function EditPage () {
     const history = useHistory();
@@ -13,28 +13,26 @@ function EditPage () {
     const currentTags = useSelector(store => store.uploadTags);
     // Fetching the selected photo from the redux store
     const photo = useSelector(store => store.activePhoto);
-    // Setting value of description to change as typing
-    const [photoDescription, setPhotoDescription] = useState(photo.description);
-    // Local state for photoDate edits
-    const [newDate, setNewDate] = useState(photo.to_char);
 
     useEffect( () => {
-        if (photo.array_agg) {dispatch({ type: 'SET_EDIT_TAGS', payload: photo.array_agg})};
-    }, []);
+        console.log('photo is', photo);
+        photo.array_agg && dispatch({ type: 'SET_EDIT_TAGS', payload: photo.array_agg});
+    }, [photo]);
 
     const handleSubmit = () => {
         history.push('/list');
 
 
-        console.log(newDate, photoDescription, photo.imageURL, photo.id, currentTags);
-        // dispatch({
-        //     type: 'UPDATE_EDITED_PHOTO',
-        //     payload: {
-        //         imageURL: photo.imageURL,
-                
-        //     }
-        // })
-
+        console.log(photo, currentTags);
+        dispatch({
+            type: 'UPDATE_EDITED_PHOTO',
+            payload: {
+                imageURL: photo.imageURL,
+                description: photo.description,
+                date: photo.to_char,
+                tags: currentTags
+            }
+        })
     };
 
     return (
@@ -45,12 +43,15 @@ function EditPage () {
         />
         Description: 
         <input
-            value={photoDescription}
-            onChange={(event) => setPhotoDescription(event.target.value)}
+            value={photo.description}
+            onChange={(event) => dispatch({
+                type: 'UPDATE_ACTIVE_PHOTO', 
+                payload: {description: event.target.value}
+            })}
         >
         </input><br/>
         Current Tags:
-        {currentTags &&
+        {currentTags !== undefined &&
         currentTags.map(tag => (
             <Chip
                 key={tag}
@@ -64,8 +65,13 @@ function EditPage () {
         <br/>
         Date:
         <DatePicker 
-            selected={newDate}
-            onChange={(date) => setNewDate(date)}
+            selected={'Feb 01 2022 10:33:42 GMT-0600'}
+            onChange={(date) => dispatch({
+                type: 'UPDATE_ACTIVE_PHOTO',
+                payload: {
+                    photoDate: date,
+                }})}
+                renderInput={(params) => <TextField {...params} />}
         />
         <br/>
         <button onClick={() => handleSubmit()}>

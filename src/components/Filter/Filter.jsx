@@ -10,6 +10,7 @@ function Filter () {
     const user = useSelector(store => store.user);
     const [selectedTag, setSelectedTag] = useState('');
 
+
     useEffect(() => {
         dispatch({ type: 'FETCH_TAGS' });
     }, []);

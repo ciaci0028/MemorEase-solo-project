@@ -3,8 +3,7 @@ const uploadTagsReducer = (state = [], action) => {
         case 'SET_UPLOAD_TAGS':
             return [...state, action.payload];
         case 'SET_EDIT_TAGS':
-            let setState = [...action.payload]
-            return setState;
+            return [...action.payload];
         case 'DELETE_UPLOAD_TAGS':
             let tempArray = [];
             for (let tag of state) {
