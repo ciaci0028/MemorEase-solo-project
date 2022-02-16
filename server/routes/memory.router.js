@@ -14,7 +14,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     SELECT 
         "photos"."imageURL",
         "photos"."description",
-        TO_CHAR("photos"."photoDate", 'Month DD, YYYY'),
+        "photos"."photoDate",
         "user"."id"
     FROM "photos"
     JOIN "user"
@@ -30,7 +30,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
     pool.query(queryText, queryParams)
         .then(results => {
-            res.send(results.rows)
+            res.send(results.rows[0])
         })
         .catch(error => {
             console.log('error retrieving memory', error);

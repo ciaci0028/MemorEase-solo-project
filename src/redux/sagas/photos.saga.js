@@ -54,6 +54,16 @@ function* activePhoto (action) {
     }
 };
 
+function* updatePhoto (action) {
+    try {
+        
+        yield axios.put(`/api/photos/${action.payload.id}`, action.payload);
+    }
+    catch (error) {
+        console.log('failed to update photo', error)
+    }
+}
+
 // make this fetchable by whole app
 function* fetchPhotosSaga () {
     yield takeEvery('FETCH_PHOTOS', fetchPhotos);
@@ -61,6 +71,7 @@ function* fetchPhotosSaga () {
     yield takeEvery('RETRIEVE_MEMORY', retrieveMemory);
     yield takeEvery('POST_PHOTO', postPhoto);
     yield takeEvery('FETCH_ACTIVE_PHOTO', activePhoto);
+    yield takeEvery('UPDATE_EDITED_PHOTO', updatePhoto);
 }
 
 export default fetchPhotosSaga;

@@ -15,7 +15,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         "photos"."id" AS "photoID",
         "photos"."imageURL",
         "user"."id" AS "userID",
-        TO_CHAR("photos"."photoDate", 'MM DD, YYYY'),
+        "photos"."photoDate",
         ARRAY_AGG("tags"."tagName"),
         "photos"."description"
     FROM "user"
@@ -27,7 +27,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         ON "tags"."id" = "photoTagJoiner"."tagID"
     WHERE "user"."id" = $1
     GROUP BY "photos"."id", "user"."id"
-    ORDER BY TO_CHAR DESC;
+    ORDER BY "photos"."photoDate" DESC;
     `;
 
     let queryParams = [
@@ -51,7 +51,7 @@ router.get('/:tag', rejectUnauthenticated, (req, res) => {
     let queryText = `
     SELECT
         "photos"."imageURL",
-        TO_CHAR("photos"."photoDate", 'Month DD, YYYY'),
+        "photos"."photoDate",
         ARRAY_AGG("tags"."tagName")
     FROM "user"
     JOIN "photos"
@@ -62,7 +62,8 @@ router.get('/:tag', rejectUnauthenticated, (req, res) => {
         ON "tags"."id" = "photoTagJoiner"."tagID"
     WHERE "user"."id" = $1
         AND "tags"."tagName" = $2
-    GROUP BY "photos"."imageURL", "photos"."photoDate";
+    GROUP BY "photos"."imageURL", "photos"."photoDate"
+    ORDER BY "photos"."photoDate" DESC;
     `;
 
     let queryParams = [
@@ -129,6 +130,32 @@ router.delete(`/:id`, rejectUnauthenticated, (req, res) => {
             console.log('error deleting from db', error)
         })
 });
+
+// Edit mode - updating a photo with new data
+router.put('/:id', rejectUnauthenticated, (req, res) => {
+    console.log('made it to router.put', req.body.photoDate, req.params.id);
+
+    let sqlText = `
+        UPDATE "photos"
+        SET "description" = $1,
+            "photoDate" = $2
+        WHERE "photos"."id" = $3;
+    `;
+
+    let sqlParams = [
+        req.body.description,
+        req.body.date,
+        req.params.id
+    ]
+
+    pool.query(sqlText, sqlParams)
+        .then(results => {
+            res.sendStatus(201);
+        })
+        .catch(error => {
+            console.log('error updating photo', error);
+        })
+})
 
 
 module.exports = router;

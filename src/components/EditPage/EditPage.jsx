@@ -22,14 +22,13 @@ function EditPage () {
     const handleSubmit = () => {
         history.push('/list');
 
-
-        console.log(photo, currentTags);
         dispatch({
             type: 'UPDATE_EDITED_PHOTO',
             payload: {
+                id: photo.id,
                 imageURL: photo.imageURL,
                 description: photo.description,
-                date: photo.to_char,
+                date: photo.photoDate,
                 tags: currentTags
             }
         })
@@ -65,7 +64,7 @@ function EditPage () {
         <br/>
         Date:
         <DatePicker 
-            selected={'Feb 01 2022 10:33:42 GMT-0600'}
+            selected={photo.photoDate && new Date(photo.photoDate)}
             onChange={(date) => dispatch({
                 type: 'UPDATE_ACTIVE_PHOTO',
                 payload: {

@@ -7,10 +7,11 @@ function Filter () {
     const dispatch = useDispatch();
 
     const tags = useSelector(store => store.tags);
-    const user = useSelector(store => store.user);
     const [selectedTag, setSelectedTag] = useState('');
 
 
+    const emptyArray = ['Add New Tags'];
+    
     useEffect(() => {
         dispatch({ type: 'FETCH_TAGS' });
     }, []);
@@ -30,9 +31,9 @@ function Filter () {
             />}
         />
         <br/>
-        { selectedTag &&
+        {/* { selectedTag &&
         <button onClick={() => dispatch({type: 'FETCH_PHOTOS'})}>List All</button>
-        }
+        } */}
         </>
     )
 };

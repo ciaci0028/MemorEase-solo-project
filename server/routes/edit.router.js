@@ -13,6 +13,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
     let queryText = `
         SELECT 
+            "photos"."id",
             "photos"."imageURL",
             "photos"."description",
             "photos"."photoDate",
@@ -24,7 +25,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
             ON "tags"."id" = "photoTagJoiner"."tagID"
         WHERE "photos"."id" = $1
         GROUP BY
-            "photos"."imageURL", "photos"."description", "photos"."photoDate";
+            "photos"."id", "photos"."imageURL", "photos"."description", "photos"."photoDate";
     `;
 
     let queryParams = [
