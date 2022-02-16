@@ -13,9 +13,6 @@ function AutocompleteElement () {
     // Value to use and play with during the functionality of Autocomplete
     // Retrieving the users tags from the redux store
     const fetchedTags = useSelector(store => store.tags);
-    console.log('fetched tags are', fetchedTags);
-
-
 
     return (
 

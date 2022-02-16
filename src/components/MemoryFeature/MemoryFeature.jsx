@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 function MemoryFeature () {
     const dispatch = useDispatch();
@@ -7,26 +9,29 @@ function MemoryFeature () {
     const memory = useSelector(store => store.memory);
     console.log('memory is', memory);
 
+    const relativeDate = moment(memory.photoDate).format("YYYYMMD");
+
     useEffect(() => {
         retrieveMemory();
     }, [])
 
     const retrieveMemory = () => {
-
-
         dispatch({ type: 'RETRIEVE_MEMORY' })
-
     }
 
     return (
         <>
-            <p>A Special Random Memory for You</p>
-            {memory && 
+            <p>A Special Memory for You</p>
+            <p>{moment(relativeDate).fromNow()}</p>
+            {memory ? 
             <><img
-                src={memory[0].imageURL}
+                src={memory.imageURL}
             />
-            <p>{memory[0].description} from {memory[0].to_char}</p>
-            </>}
+            <p>{memory.description} from {moment(memory.photoDate).format('MMMM Do, YYYY')}</p>
+            </>
+            :
+            <p>No photos to share yet! Upload a new photo <Link to="/upload">here</Link></p>
+            }
         </>
     )
 };

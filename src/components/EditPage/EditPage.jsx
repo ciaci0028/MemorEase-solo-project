@@ -1,19 +1,38 @@
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import DatePicker from "react-datepicker";
 import Chip from '@mui/material/Chip';
 import Autocomplete from '../UploadPage/Autocomplete';
+import DatePicker from 'react-datepicker';
 
 function EditPage () {
     const history = useHistory();
+    const dispatch = useDispatch();
 
-    const uploadTags = useSelector(store => store.uploadTags);
+    // Fetching the active tags from the redux store
+    const currentTags = useSelector(store => store.uploadTags);
+    // Fetching the selected photo from the redux store
     const photo = useSelector(store => store.activePhoto);
-    console.log('in edit, upload tags are', uploadTags);
+
+    useEffect( () => {
+        console.log('photo is', photo);
+        photo.array_agg && dispatch({ type: 'SET_EDIT_TAGS', payload: photo.array_agg});
+    }, [photo]);
 
     const handleSubmit = () => {
         history.push('/list');
-    }
+
+        dispatch({
+            type: 'UPDATE_EDITED_PHOTO',
+            payload: {
+                id: photo.id,
+                imageURL: photo.imageURL,
+                description: photo.description,
+                date: photo.photoDate,
+                tags: currentTags
+            }
+        })
+    };
 
     return (
         <>
@@ -24,27 +43,34 @@ function EditPage () {
         Description: 
         <input
             value={photo.description}
+            onChange={(event) => dispatch({
+                type: 'UPDATE_ACTIVE_PHOTO', 
+                payload: {description: event.target.value}
+            })}
         >
         </input><br/>
         Current Tags:
-        {photo.array_agg &&
-        photo.array_agg.map(tag => (
+        {currentTags !== undefined &&
+        currentTags.map(tag => (
             <Chip
                 key={tag}
                 label={tag}
-                onDelete={() => console.log('deleted photo')}
+                onDelete={() => dispatch({ type: 'DELETE_UPLOAD_TAGS', payload: tag})}
             />
         ))}
         <br/>
         New Tags:
         <Autocomplete />
-        <button
-            onClick={() => console.log('new Tag submitted')}
-        >Submit New Tag</button>
         <br/>
         Date:
         <DatePicker 
-            value={photo.to_char}
+            selected={photo.photoDate && new Date(photo.photoDate)}
+            onChange={(date) => dispatch({
+                type: 'UPDATE_ACTIVE_PHOTO',
+                payload: {
+                    photoDate: date,
+                }})}
+                renderInput={(params) => <TextField {...params} />}
         />
         <br/>
         <button onClick={() => handleSubmit()}>

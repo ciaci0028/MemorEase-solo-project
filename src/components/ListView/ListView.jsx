@@ -1,13 +1,10 @@
 import React, { useEffect, useState }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-
+import { useHistory, Link } from 'react-router-dom';
 import Filter from '../Filter/Filter';
+import DateFilter from '../Filter/DateFilter';
+import moment from 'moment';
 
-// This is one of our simplest components
-// It doesn't have local state
-// It doesn't dispatch any redux actions or display any part of redux state
-// or even care what the redux state is
 
 function ListView() {
   const history = useHistory();
@@ -18,25 +15,23 @@ function ListView() {
   //Button for toggling into edit mode
   const [buttonStatus, setButtonStatus] = useState(false);
 
+
   useEffect(() => {
     dispatch({ type: 'FETCH_PHOTOS', payload: user.id })
   }, []);
 
-  console.log('photos are', photoList);
-
-
-  // function for starting delete sequence
+  // function for starting delete sequence once in edit mode
   const handleDelete = (photoID) => {
-    console.log('in handleDelete, photoID is', photoID);
-
     dispatch({
       type: 'DELETE_PHOTO',
       payload: photoID
     })
   };
 
+  // Function for entering into edit mode
   const handleEdit = (photoID) => {
-
+    console.log('in handleEdit', photoID);
+  
     dispatch({
       type: 'FETCH_ACTIVE_PHOTO',
       payload: photoID
@@ -45,21 +40,29 @@ function ListView() {
     history.push('/edit');
   };
 
-  console.log('button status', buttonStatus);
-
   return (
+    <>
+    {photoList.length === 0 ? 
+      <>
+      <p>You do not currently have any photos uploaded!</p>
+      <p>Upload new photos <Link to="/upload">here</Link></p>
+      </>
+    :
+    <>
     <div className="container">
       { buttonStatus ? 
-        <button onClick={() => setButtonStatus(false)}>Cancel Editing</button>
+        <button onClick={() => setButtonStatus(false)}>Done Editing</button>
         : <button onClick={() => setButtonStatus(true)}>Edit Mode</button>
       }
       <br/><br/>
       <Filter />
+      <p>Back to <Link to="/list">full list view</Link></p>
+      <DateFilter />
       <p>Your Photos</p>
       {photoList.map(photo => (
         <div key={photo.photoID}>
         <img src={photo.imageURL} />
-        <p>Photo of {photo.array_agg.join(", ")} from {photo.to_char}</p>
+        <p>Photo of {photo.array_agg.join(", ")} from {moment(photo.photoDate).format('MMMM Do, YYYY')}</p>
         <p>{photo.description}</p>
         { buttonStatus && 
           <div>
@@ -70,6 +73,11 @@ function ListView() {
         </div>
       ))}
     </div>
+    </>
+    }
+    </>
+    
+    
   );
 }
 

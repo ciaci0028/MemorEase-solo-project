@@ -77,7 +77,9 @@ export default function Calendar() {
                         >
                             {day.format("D")}<br/>
                             {/* <img className='tinyPic' src={tinyPic.url}/>     */}
-
+                            {/* if there is a photo with that date, render that photo
+                            
+                            */}
                             {/* <br/>
                             {tinyPic.date === day.format("D") &&
                                 <img className="tinyPic" src={tinyPic.url} alt="doggy pic" />
