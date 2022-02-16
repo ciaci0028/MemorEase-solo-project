@@ -6,7 +6,7 @@ const pool = require('../modules/pool');
 
 const router = express.Router();
 
-// Retrieve photos from database
+// Retrieve all photos for a user from the database
 router.get('/', rejectUnauthenticated, (req, res) => {
     console.log('in get photos', req.user.id)
 
@@ -44,8 +44,9 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         
 });
 
-//for the filter option, retrieving all user's tags
-router.get('/:tag', rejectUnauthenticated, (req, res) => {
+// for the filter by tag option, retrieving all photos for a particular
+// chosen tag
+router.get('/filter/:tag', rejectUnauthenticated, (req, res) => {
     console.log('in filter photos', req.user.id, req.params.tag)
 
     let queryText = `
@@ -81,6 +82,49 @@ router.get('/:tag', rejectUnauthenticated, (req, res) => {
         
 });
 
+// For the filter option, choosing all photos
+// by a particular date
+router.get('/:month/:day', rejectUnauthenticated, (req, res) => {
+
+    let queryText = `
+    SELECT
+        "photos"."id",
+        "photos"."imageURL",
+        "photos"."description",
+        "photos"."photoDate",
+        ARRAY_AGG("tags"."tagName")
+    FROM
+        "photos"
+    LEFT JOIN "user"
+        ON "user"."id" = "photos"."userID"
+    LEFT JOIN "photoTagJoiner"
+        ON "photoTagJoiner"."photoID" = "photos"."id"
+    LEFT JOIN "tags"
+        ON "tags"."id" = "photoTagJoiner"."tagID"
+    WHERE "user"."id" = $1
+    AND EXTRACT(MONTH FROM "photos"."photoDate") = $2 
+    AND EXTRACT(DAY FROM "photos"."photoDate") = $3
+    GROUP BY "photos"."imageURL", "photos"."photoDate", 
+    "photos"."id", "photos"."description";
+    `;
+
+    let queryParams = [
+        req.user.id,
+        req.params.month,
+        req.params.day
+    ];
+
+    pool.query(queryText, queryParams)
+        .then(results => {
+            res.send(results.rows);
+        })
+        .catch(error => {
+            console.log('error in filter by dates', error);
+            
+        })
+
+})
+
 // Upload page - adding a new photo (photo only to "photos" table)
 router.post('/', rejectUnauthenticated, (req, res) => {
     console.log('in post photos', req.body)
@@ -109,7 +153,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 
 })
 
-// Delete a photo in edit mode
+// Delete a photo in edit mode from the database
 router.delete(`/:id`, rejectUnauthenticated, (req, res) => {
     console.log('in delete photo', req.params.id);
 
