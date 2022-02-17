@@ -16,6 +16,7 @@ function ListView() {
   const [buttonStatus, setButtonStatus] = useState(false);
 
 
+  // Upon page load, fetch the user's photos
   useEffect(() => {
     dispatch({ type: 'FETCH_PHOTOS', payload: user.id })
   }, []);
@@ -26,7 +27,7 @@ function ListView() {
       type: 'DELETE_PHOTO',
       payload: photoID
     })
-  };
+  }; // end handleDelete
 
   // Function for entering into edit mode
   const handleEdit = (photoID) => {
@@ -38,7 +39,7 @@ function ListView() {
     });
 
     history.push('/edit');
-  };
+  }; // end handleEdit
 
   return (
     <>

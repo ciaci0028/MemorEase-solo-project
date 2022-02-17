@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { put, takeEvery } from 'redux-saga/effects';
 
-// Saga for retrieving tags
+// Saga for retrieving tags for a user
 function* fetchTags(action) {
     try {
         const response = yield axios.get(`/api/tags/${action.payload}`);
@@ -16,6 +16,7 @@ function* fetchTags(action) {
     }
 };
 
+// Saga for posting a new tag
 function* postTag(action) {
     try {
         yield axios.post(`/api/tags`, action.payload);

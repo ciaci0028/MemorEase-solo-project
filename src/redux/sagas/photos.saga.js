@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { put, takeEvery } from 'redux-saga/effects';
 
-// Saga for retrieving photos
+// Saga for retrieving photos for user
 function* fetchPhotos() {
     try {
         const response = yield axios.get(`/api/photos/`);
@@ -15,6 +15,7 @@ function* fetchPhotos() {
     }
 };
 
+// Function for deleting photo
 function* deletePhoto(action) {
     try {
         const response = yield axios.delete(`/api/photos/${action.payload}`);
@@ -25,6 +26,7 @@ function* deletePhoto(action) {
     }
 };
 
+// Function for retrieving a random memory
 function* retrieveMemory () {
     try {
         const response = yield axios.get(`/api/memory/`);
@@ -35,6 +37,7 @@ function* retrieveMemory () {
     }
 };
 
+// Functiong for the upload/posting a new photo
 function* postPhoto (action) {
     try {
         const response = yield axios.post(`/api/photos`, action.payload);
@@ -44,6 +47,7 @@ function* postPhoto (action) {
     }
 };
 
+// Function grabs the active photo to prepare for editing
 function* activePhoto (action) {
     try {
         const response = yield axios.get(`/api/edit/${action.payload}`);
@@ -54,6 +58,7 @@ function* activePhoto (action) {
     }
 };
 
+// Function for the put and editing the selected photo
 function* updatePhoto (action) {
     try {
         

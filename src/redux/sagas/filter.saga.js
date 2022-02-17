@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { put, takeEvery } from 'redux-saga/effects';
 
-// Saga for retrieving photos
+// Saga for retrieving photos by a filter selection
 function* fetchFilteredPhotos(action) {
     console.log('in fetch filtered photos', action.payload);
     try {
@@ -17,6 +17,7 @@ function* fetchFilteredPhotos(action) {
     }
 };
 
+// Function for filtering by a date
 function* filterByDate(action) {
     console.log('in filter saga by date', action.payload);
 
