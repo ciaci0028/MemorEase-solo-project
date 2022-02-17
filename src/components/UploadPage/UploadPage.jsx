@@ -91,7 +91,7 @@ function UploadPage () {
                 image upload success  
             */}
             {toggleButton ?
-            <div>
+            <div className="uploadSuccess">
                 <p>Upload Success!</p>
                 <img src={newImage.imageURL} />
                 <p>{newImage.description}</p>

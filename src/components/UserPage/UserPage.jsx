@@ -10,7 +10,7 @@ function UserPage() {
   return (
     <div className="container">
       <h2>Welcome, {user.firstName}!</h2>
-      <Calendar />
+      {/* <Calendar /> */}
       <MemoryFeature />
     </div>
   );
