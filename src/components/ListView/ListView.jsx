@@ -4,7 +4,12 @@ import { useHistory, Link } from 'react-router-dom';
 import Filter from '../Filter/Filter';
 import DateFilter from '../Filter/DateFilter';
 import moment from 'moment';
-
+// Card MUI imports
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
 
 function ListView() {
   const history = useHistory();
@@ -61,17 +66,27 @@ function ListView() {
       <p>Back to <Link to="/list">full list view</Link></p>
       <p className="yourPhotosCopy">Your Photos</p>
       {photoList.map(photo => (
-        <div key={photo.photoID}>
-        <img src={photo.imageURL} />
-        <p className="photoOfCopy">Photo of {photo.array_agg.join(", ")} from {moment(photo.photoDate).format('MMMM Do, YYYY')}</p>
-        <p className='descriptionCopy'>{photo.description}</p>
-        { buttonStatus && 
-          <div>
-            <button onClick={() => handleEdit(photo.photoID)}>Edit</button>
-            <button onClick={() => handleDelete(photo.photoID)}>Delete</button>
-          </div>
-        }
-        </div>
+        <Card className="photoCards" sx={{ maxWidth: 345 }}>
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              max-height="500"
+              image={photo.imageURL}
+              alt={photo.description}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {photo.description}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Tags: {photo.array_agg.join(", ")}
+              </Typography>
+              <Typography>
+                {moment(photo.photoDate).format('MMMM Do, YYYY')}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
       ))}
     </div>
     </>
