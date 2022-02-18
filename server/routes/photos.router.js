@@ -105,7 +105,8 @@ router.get('/:month/:day', rejectUnauthenticated, (req, res) => {
     AND EXTRACT(MONTH FROM "photos"."photoDate") = $2 
     AND EXTRACT(DAY FROM "photos"."photoDate") = $3
     GROUP BY "photos"."imageURL", "photos"."photoDate", 
-    "photos"."id", "photos"."description";
+    "photos"."id", "photos"."description"
+    ORDER BY "photos"."photoDate" DESC;
     `;
 
     let queryParams = [

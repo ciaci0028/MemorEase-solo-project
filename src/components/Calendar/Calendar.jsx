@@ -40,10 +40,10 @@ export default function Calendar() {
     }, [value]);
 
 
-    // const tinyPic = {
-    //     date: 6,                
-    //     url: "https://www.akc.org/wp-content/uploads/2017/11/Australian-Shepherd.1.jpg"
-    // };
+    const tinyPic = {
+        date: 6,                
+        url: "https://www.akc.org/wp-content/uploads/2017/11/Australian-Shepherd.1.jpg"
+    };
 
 
 

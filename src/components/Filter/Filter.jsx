@@ -18,7 +18,7 @@ function Filter () {
 
 
     return (
-        <>
+        <div className="filterInput">
         <Autocomplete
             disablePortal
             id="combo-box-demo"
@@ -34,7 +34,7 @@ function Filter () {
         {/* { selectedTag &&
         <button onClick={() => dispatch({type: 'FETCH_PHOTOS'})}>List All</button>
         } */}
-        </>
+        </div>
     )
 };
 

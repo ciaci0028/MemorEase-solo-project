@@ -23,11 +23,11 @@ function MemoryFeature () {
         <>
             <p>A Special Memory for You</p>
             <p>{moment(relativeDate).fromNow()}</p>
+            <p>{memory.description} from {moment(memory.photoDate).format('MMMM Do, YYYY')}</p>
             {memory ? 
             <><img
                 src={memory.imageURL}
             />
-            <p>{memory.description} from {moment(memory.photoDate).format('MMMM Do, YYYY')}</p>
             </>
             :
             <p>No photos to share yet! Upload a new photo <Link to="/upload">here</Link></p>

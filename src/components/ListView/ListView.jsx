@@ -51,20 +51,20 @@ function ListView() {
     :
     <>
     <div className="container">
-      { buttonStatus ? 
-        <button onClick={() => setButtonStatus(false)}>Done Editing</button>
-        : <button onClick={() => setButtonStatus(true)}>Edit Mode</button>
-      }
       <br/><br/>
       <Filter />
-      <p>Back to <Link to="/list">full list view</Link></p>
       <DateFilter />
-      <p>Your Photos</p>
+      { buttonStatus ? 
+        <button className="editButton" onClick={() => setButtonStatus(false)}>Done Editing</button>
+        : <button className="editButton" onClick={() => setButtonStatus(true)}>Enter Edit Mode</button>
+      }
+      <p>Back to <Link to="/list">full list view</Link></p>
+      <p className="yourPhotosCopy">Your Photos</p>
       {photoList.map(photo => (
         <div key={photo.photoID}>
         <img src={photo.imageURL} />
-        <p>Photo of {photo.array_agg.join(", ")} from {moment(photo.photoDate).format('MMMM Do, YYYY')}</p>
-        <p>{photo.description}</p>
+        <p className="photoOfCopy">Photo of {photo.array_agg.join(", ")} from {moment(photo.photoDate).format('MMMM Do, YYYY')}</p>
+        <p className='descriptionCopy'>{photo.description}</p>
         { buttonStatus && 
           <div>
             <button onClick={() => handleEdit(photo.photoID)}>Edit</button>
