@@ -7,7 +7,7 @@ body,
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
-  background-image: radial-gradient(rgb(181, 215, 231), rgb(192, 192, 201));
+  background-color: #b5d7e7;
 }
 
 img {
@@ -162,4 +162,21 @@ ul {
 
 .editPageContainer {
   padding-bottom: 100px
+}
+
+.memoryCard {
+  margin-left: 40px;
+}
+
+.specialMemoryCopy {
+  font-family: cursive;
+  font-size: 30px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.timeAgoCopy {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 25px;
+  margin-top: 0px;
 }
