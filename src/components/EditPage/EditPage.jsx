@@ -35,7 +35,7 @@ function EditPage () {
     };
 
     return (
-        <>
+        <div className="editPageContainer">
         <h1>Edit Page</h1>
         <img
             src={photo.imageURL}
@@ -73,14 +73,11 @@ function EditPage () {
                 renderInput={(params) => <TextField {...params} />}
         />
         <br/>
-        <button onClick={() => handleSubmit()}>
+        <button className="acceptButton" onClick={() => handleSubmit()}>
             Accept Changes
         </button>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        </>
+
+        </div>
     )
 };
 
