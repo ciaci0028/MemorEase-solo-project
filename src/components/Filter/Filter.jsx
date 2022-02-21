@@ -20,13 +20,14 @@ function Filter () {
     return (
         <div className="filterInput">
         <Autocomplete
+            className="filterBox"
             disablePortal
             id="combo-box-demo"
             options={tags[0] && tags[0].array_agg}
-            sx={{ width: 300 }}
+            sx={{ width: 150, height: 40 }}
             renderInput={(params) => 
             <TextField {...params} 
-                label="Filter By"
+                label="Tags"
                 onSelect={(event) => dispatch({ type: 'FILTER_PHOTOS', payload: event.target.value})}    
             />}
         />

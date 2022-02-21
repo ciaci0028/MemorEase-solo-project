@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import DatePicker from 'react-datepicker';
 import {useDispatch} from 'react-redux';
+import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
+
 
 // Date Filter that will take in the month and 
 // days of photos and display only the ones
@@ -34,7 +36,6 @@ function DateFilter () {
 
     return (
         <>
-        <p>Filter by date:</p>
         <DatePicker 
             selected={startDate} 
             onChange={(date) => handleSelectedDate(date)}

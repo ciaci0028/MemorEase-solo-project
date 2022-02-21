@@ -13,6 +13,9 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import EditOffOutlinedIcon from '@mui/icons-material/EditOffOutlined';
+
 
 function ListView() {
   const history = useHistory();
@@ -22,6 +25,8 @@ function ListView() {
 
   //Button for toggling into edit mode
   const [buttonStatus, setButtonStatus] = useState(false);
+  const [description, setDescription] = useState('');
+  const [clickedPhoto, setClickedPhoto] = useState({ array_agg: []});
 
 
   // Upon page load, fetch the user's photos
@@ -66,7 +71,8 @@ function ListView() {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 380,
+    height: 600,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -77,9 +83,12 @@ function ListView() {
   const [open, setOpen] = useState(false);
   const [modalImage, setModalImage] = useState('');
 
-  const handleOpen = (url) => {
+  const handleOpen = (photo) => {
     setOpen(true);
-    setModalImage(url);
+    setClickedPhoto(photo);
+    console.log('clicked photo is', photo)
+    setModalImage(photo.imageURL);
+    setDescription(photo.description)
   };
 
   const handleClose = () => setOpen(false);
@@ -94,28 +103,28 @@ function ListView() {
     :
     <>
     <div className="container">
-      <br/><br/>
-      <Filter />
-      <DateFilter />
-      { buttonStatus ? 
-        <button className="editButton" onClick={() => setButtonStatus(false)}>Done Editing</button>
-        : <button className="editButton" onClick={() => setButtonStatus(true)}>Enter Edit Mode</button>
-      }
-      <p>Back to <Link to="/list">full list view</Link></p>
-      <p className="yourPhotosCopy">Your Photos</p>
+      <div className="smallerContainer">
+        <Filter />
+        <DateFilter />
+        { buttonStatus ? 
+          <EditOffOutlinedIcon className="editButton" onClick={() => setButtonStatus(false)} />
+          : <EditOutlinedIcon className="editButton" onClick={() => setButtonStatus(true)} />
+        }
+      </div>
     <Box className="masonry" sx={{ width: 450, minHeight: 829 }}>
       <Masonry columns={3} spacing={2}>
         {photoList.map((photo) => (
           <div key={photo.id}>
-            <Label>{photo.description}<br/>
+            {/* <Label>{photo.description}<br/>
             {moment(photo.photoDate).format('MMMM Do, YYYY')}
-            </Label>
+            </Label> */}
             <img
               src={`${photo.imageURL}?w=162&auto=format`}
               srcSet={`${photo.imageURL}?w=162&auto=format&dpr=2 2x`}
               alt={photo.description}
               loading="lazy"
-              onClick={() => handleOpen(photo.imageURL)}
+              className="listImages"
+              onClick={() => handleOpen(photo)}
               id={photo.id}
               style={{
                 borderBottomLeftRadius: 4,
@@ -124,7 +133,7 @@ function ListView() {
                 width: '100%',
               }}
             />
-            {photo.array_agg.length > 0 && <Label>Tags: {photo.array_agg.join(", ")}</Label>}
+            {/* {photo.array_agg.length > 0 && <Label>Tags: {photo.array_agg.join(", ")}</Label>} */}
             { buttonStatus && 
               <div>
                 <button className="editDeleteButton" onClick={() => handleEdit(photo.photoID)}>Edit</button>
@@ -141,12 +150,15 @@ function ListView() {
     <div>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClick={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <img src={modalImage} />
+          <p className="descriptionCopy">{description && description}</p>
+          <p className="descriptionCopy">{clickedPhoto && moment(clickedPhoto.photoDate).format('MMMM Do, YYYY')}</p>
+          <p className="descriptionCopy">Tags: {clickedPhoto && clickedPhoto?.array_agg.join(", ")}</p>
         </Box>
       </Modal>
     </div>

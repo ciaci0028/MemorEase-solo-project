@@ -29,6 +29,13 @@ function AboutPage() {
         <ul>
           <li>A way to download and save collages to email or print</li>
         </ul>
+        <hr></hr>
+        <p>Thank you!</p>
+        <ul>
+          <li>Prime Digital Academy and Staff</li>
+          <li>Woodall Cohort</li>
+          <li>My friends and family</li>
+        </ul>
       </div>
     </div>
   );

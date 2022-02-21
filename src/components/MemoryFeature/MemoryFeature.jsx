@@ -35,7 +35,7 @@ function MemoryFeature () {
                 <CardActionArea>
                     <CardMedia
                     component="img"
-                    max-height="400"
+                    max-height="250"
                     image={memory.imageURL}
                     alt={memory.description}
                     />

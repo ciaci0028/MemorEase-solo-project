@@ -10,11 +10,12 @@ footer {
 
 .footerCopy {
   height: 15px;
+  width: 500px;
   padding-bottom: 10px;
   padding-top: 10px;
   margin-bottom: 0px;
   margin-top: 0px;
-  background-color: #b5d7e7;
+  background-color: #699fa1;
 }
 
 .logOut {
@@ -25,7 +26,7 @@ footer {
   padding: 24px 10px;
   text-decoration: none;
   font-size: 15px;
-  width: 448px;
+  width: 480px;
   height: 35px;
   padding-top: 5px;
 

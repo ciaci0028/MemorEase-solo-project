@@ -6,10 +6,12 @@ import Autocomplete from './Autocomplete';
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
+import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 
 
 function UploadPage () {
     const dispatch = useDispatch();
+
 
     useEffect( () => {
         dispatch({ type: 'FETCH_TAGS' })
@@ -84,6 +86,11 @@ function UploadPage () {
         setToggleButton(false);
     };
 
+    const handleDemonstration = () => {
+        setImageURL('/images/AshleyRuhi19FEB22.jpg');
+        setDescription('Favorite Auntie!')
+    }
+
     return (
         <>
             {/* 
@@ -100,16 +107,15 @@ function UploadPage () {
                 <Link to='/list'>Back to List View</Link>
             </div>
             : <div>
-                <p>Upload New Photo Here</p>
+                <p onClick={event => handleDemonstration()}>Upload New Photo Here</p>
                 <input
                     placeholder="Image URL"
                     value={imageURL}
                     onChange={(event) => setImageURL(event.target.value)}
+                    className="descriptionInput"
                 >
                 </input>
-                <br/>
                 <Autocomplete />
-                <br/>
                 {uploadTags &&
                     uploadTags.map(tag => (
                         <Chip 
@@ -125,15 +131,15 @@ function UploadPage () {
                     placeholder="Description (optional)"
                     value={description}
                     onChange={(event) => setDescription(event.target.value)}
+                    className="descriptionInput"
                 >
                 </input>
+                <br/>
                 <DatePicker 
                     selected={startDate} onChange={(date) => setStartDate(date)}
                 />
                 <br/>
-                <button onClick={handleSubmit}>
-                    Upload
-                </button>
+                <AddPhotoAlternateOutlinedIcon className="uploadIcon" sx={{ fontSize: 50 }} onClick={handleSubmit} />
             </div>}
         </>
     )

@@ -1,6 +1,5 @@
 import React from 'react';
 import './Footer.css';
-import LogOutButton from '../LogOutButton/LogOutButton';
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
@@ -10,7 +9,6 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 function Footer() {
   return <footer>
       <div className="footerContainer">
-        <LogOutButton className="logOut" />
         <h5 className='footerCopy'>&copy; MemorEase by Sabrina Ciaciura 2022</h5>
       </div>
     </footer>;
