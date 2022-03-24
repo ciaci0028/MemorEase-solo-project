@@ -29,6 +29,10 @@ Make a new database called `memorease` in PostgreSQL and use the database.sql fi
 
 Upon registering, a user can upload their photos one by one into the application. Users can select the date, as well as any tags they want to be associated with the photo. On the home page, a user will be shown a random photo memory. The filter feature allows the user to view a list of photos based off their tags or a chosen date.
 
+## App Demo
+
+To view a demo of the app, check out my [LinkedIn](https://www.linkedin.com/posts/sabrinaciaciura_i-finished-my-first-solo-application-and-ugcPost-6901939941144948736-xdGa?utm_source=linkedin_share&utm_medium=member_desktop_web).
+
 ## Built With
 
 This application uses the following technologies:
@@ -45,15 +49,3 @@ This application uses the following technologies:
 - [Passport.js](https://www.passportjs.org/)
 
 (a full list of dependencies can be found in `package.json`)
-
-## Production Build
-
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
-
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm start`
-- Navigate to `localhost:5000`
-
-## App Demo
-
-To view a demo of the app, check out my [LinkedIn](https://www.linkedin.com/posts/sabrinaciaciura_i-finished-my-first-solo-application-and-ugcPost-6901939941144948736-xdGa?utm_source=linkedin_share&utm_medium=member_desktop_web).
