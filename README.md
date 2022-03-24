@@ -1,13 +1,9 @@
 
-# Prime Solo Project Starting Repo
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+# MemorEase - Prime Solo Project
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+*Project Duration: 2 Week Sprint*
 
-## Use the Template for This Repository (Don't Clone)
-
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account.
-
+Memorease is highly customizable and personalized web application for photos. Unlike the current social media or photo apps, users can upload a photo on any day, but associate that photo with any date. Users can also create and customize tags, which allows for filtering photos and seeing a specific list.
 
 ## Prerequisites
 
@@ -19,55 +15,36 @@ Before you get started, make sure you have the following software installed on y
 
 ## Create database and table
 
-Create a new database called `prime_app` and create a `user` table:
-
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
-
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+Make a new database called `memorease` in PostgreSQL and use the database.sql file in the root of this project to set up all of your tables.
 
 ## Development Setup Instructions
 
 - Run `npm install`
-- Create a `.env` file at the root of the project and paste this line into the file:
-  ```
-  SERVER_SESSION_SECRET=superDuperSecret
-  ```
-  While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
 - Start postgres if not running already by using `brew services start postgresql`
 - Run `npm run server`
 - Run `npm run client`
 - Navigate to `localhost:3000`
 
-## Debugging
+## How to use Memorease
 
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
+Upon registering, a user can upload their photos one by one into the application. Users can select the date, as well as any tags they want to be associated with the photo. On the home page, a user will be shown a random photo memory. The filter feature allows the user to view a list of photos based off their tags or a chosen date.
 
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
+## Built With
 
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
+This application uses the following technologies:
 
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
+- [React](https://reactjs.org/)
+- [Redux](https://maven.apache.org/)
+- [Redux-Sagas](https://redux-saga.js.org/)
+- [Express](https://expressjs.com/)
+- [Passport](http://www.passportjs.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Material-UI](https://material-ui.com/)
+- [Moment.js](https://momentjs.com/)
+- [react-chartjs-2](https://www.npmjs.com/package/react-chartjs-2)
+- [Passport.js](https://www.passportjs.org/)
 
-## Testing Routes with Postman
-
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum.
-
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
-
-1. Start the server - `npm run server`
-2. Import the sample routes JSON file [v2](./PostmanPrimeSoloRoutesv2.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-   1. `POST /api/user/register` registers a new user, see body to change username/password
-   2. `POST /api/user/login` will login a user, see body to change username/password
-   3. `GET /api/user` will get user information, by default it's not very much
-
-After running the login route above, you can try any other route you've created that requires a logged in user!
+(a full list of dependencies can be found in `package.json`)
 
 ## Production Build
 
@@ -77,45 +54,6 @@ Before pushing to Heroku, run `npm run build` in terminal. This will create a bu
 - Run `npm start`
 - Navigate to `localhost:5000`
 
-## Lay of the Land
+## App Demo
 
-There are a few videos linked below that show a walkthrough the client and sever setup to help acclimatize to the boilerplate. Please take some time to watch the videos in order to get a better understanding of what the boilerplate is like.
-
-- [Initial Set](https://vimeo.com/453297271)
-- [Server Walkthrough](https://vimeo.com/453297212)
-- [Client Walkthrough](https://vimeo.com/453297124)
-
-Directory Structure:
-
-- `src/` contains the React application
-- `public/` contains static assets for the client-side
-- `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-- `server/` contains the Express App
-
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-- src/components
-  - App/App
-  - Footer/Footer
-  - Nav/Nav
-  - AboutPage/AboutPage
-  - ListView/ListView
-  - UserPage/UserPage
-  - LoginPage/LoginPage
-  - RegisterPage/RegisterPage
-  - LogOutButton/LogOutButton
-  - ProtectedRoute/ProtectedRoute
-
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+To view a demo of the app, check out my [LinkedIn](https://www.linkedin.com/posts/sabrinaciaciura_i-finished-my-first-solo-application-and-ugcPost-6901939941144948736-xdGa?utm_source=linkedin_share&utm_medium=member_desktop_web).
